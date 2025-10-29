@@ -1,6 +1,6 @@
 const header = document.querySelector('#title');
-    console.log(header);
+console.log(header);
 
-    header.addEventListener('click', () => {
+header.addEventListener('click', () => {
     header.style.color = 'green';
 })
