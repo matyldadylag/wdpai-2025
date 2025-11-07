@@ -1,8 +1,0 @@
-Strony:
-Logowanie
-Zarządzanie użytkownikami dla administratora
-
-Biblioteki Figma:
-Font awesome
-Material design icons
-Pixabay
