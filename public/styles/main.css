@@ -1,17 +1,14 @@
 h1 { color: blue;}
- 
- 
+
 body {
     margin: 0;
     padding: 0;
 }
- 
- 
+
 .container {
     background-color: aquamarine;
 }
- 
- 
+
 nav {
     background-color: bisque;
     display: flex;
@@ -29,23 +26,20 @@ main {
     background-color: cornflowerblue;
 }
  
- 
 aside {
     background-color: darkgrey;
 }
- 
- 
+
 body {
     display: flex;
     flex-direction: column;
 }
- 
+
 .container {
     display: grid;
     grid-template-columns: 0.5fr 2.5fr;
     height: calc(100vh - 100px);
 }
- 
  
 @media screen and (max-width: 480px) {
     .container {

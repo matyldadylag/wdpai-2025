@@ -8,12 +8,14 @@
     <link rel="stylesheet" type="text/css" href="public/styles/login.css" />
   </head>
   <body>
-    <form action="\login" method="POST">
+    <form action="/login" method="POST">
       <h1 id="title">Login</h1>
-        <input name="email" type="email" placeholder="E-mail address" />
-        <input name="password" type="password" placeholder="Password" />
-        <button type="submit">Login</button>
-      </p>
+      <input name="email" type="email" placeholder="E-mail address" />
+      <input name="password" type="password" placeholder="Password" />
+      <?php if (!empty($messages)): ?>
+      <p class="error"><?= htmlspecialchars($messages) ?></p>
+      <?php endif; ?>
+      <button type="submit">Login</button>
       <a href="/register">Register</a>
     </form>
   </body>
