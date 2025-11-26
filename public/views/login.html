@@ -13,7 +13,9 @@
       <input name="email" type="email" placeholder="E-mail address" />
       <input name="password" type="password" placeholder="Password" />
       <?php if (!empty($messages)): ?>
-      <p class="error"><?= htmlspecialchars($messages) ?></p>
+      <?php foreach ($messages as $message): ?>
+      <p class="error"><?= htmlspecialchars($message) ?></p>
+      <?php endforeach; ?>
       <?php endif; ?>
       <button type="submit">Login</button>
       <a href="/register">Register</a>

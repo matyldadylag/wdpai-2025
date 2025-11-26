@@ -1,60 +1,42 @@
 <?php
 
 require_once 'Repository.php';
-//require_once __DIR__.'/../models/User.php';
-// TODO model
 
 class UserRepository extends Repository
 {
-
-    public function getUsers(): ?array
+    // Insert a new user into the database
+    public function createUser(string $name, string $email, string $hashedPassword): void
     {
+        // Prepare SQL statement to insert a new user
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM users
-        ');
-        $stmt->execute();
-
-        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return $users;
-    }
-
-    /*public function addUser(User $user)
-    {
-        $stmt = $this->database->connect()->prepare('
-            INSERT INTO users_details (name, surname, phone)
-            VALUES (?, ?, ?)
+            INSERT INTO users (name, email, password)
+            VALUES (?, ?, ?);
         ');
 
+        // Execute the prepared statement with provided data
         $stmt->execute([
-            $user->getName(),
-            $user->getSurname(),
-            $user->getPhone()
-        ]);
-
-        $stmt = $this->database->connect()->prepare('
-            INSERT INTO users (email, password, id_user_details)
-            VALUES (?, ?, ?)
-        ');
-
-        $stmt->execute([
-            $user->getEmail(),
-            $user->getPassword(),
-            $this->getUserDetailsId($user)
+            $name,
+            $email,
+            $hashedPassword
         ]);
     }
 
-    public function getUserDetailsId(User $user): int
+    // Retrieve a user by their email address.
+    public function getUserByEmail(string $email)
     {
+        // Prepare SQL statement to select user by email
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.users_details WHERE name = :name AND surname = :surname AND phone = :phone
+            SELECT * FROM users WHERE email = ?
         ');
-        $stmt->bindParam(':name', $user->getName(), PDO::PARAM_STR);
-        $stmt->bindParam(':surname', $user->getSurname(), PDO::PARAM_STR);
-        $stmt->bindParam(':phone', $user->getPhone(), PDO::PARAM_STR);
-        $stmt->execute();
 
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $data['id'];
-    }*/
+        // Execute the prepared statement
+        $stmt->execute([
+            $email
+        ]);
+
+        // Fetch the user as an associative array
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $user;
+    }
 }

@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="public/styles/main.css" />
-    <script src="public/scripts/main.js" defer></script>
   </head>
-
   <body>
     <nav>
       <p>LOGO</p>
@@ -21,18 +19,7 @@
       <aside>
         <p>PODRECZNE MENU</p>
       </aside>
-      <main>
-        <h1>CARDS</h1>
-        <!-- TODO display list of cards -->
-        <ul>
-          <?php foreach($cards as $key=>$value): ?>
-          <li>
-            <?php echo $value['title']; ?>
-            <img src="<?= $value['imageUrlPath']; ?>" />
-          </li>
-          <?php endforeach; ?>
-        </ul>
-      </main>
+      <main></main>
     </div>
   </body>
 </html>
