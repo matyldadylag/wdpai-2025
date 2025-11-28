@@ -1,74 +1,4 @@
-/* GENERAL PAGE LAYOUT */
-
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  color: #111827;
-  background-color: #ffffff;
-}
-
-/* TOP NAVBAR */
-
-.top-nav {
-  height: 72px;
-  padding: 0 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #e5e7eb;
-  box-sizing: border-box;
-}
-
-.nav-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.logo-mark {
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  border: 1px solid #d1d5db;
-  background-image: url("/public/images/logo.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: inline-block;
-}
-
-
-.logo-text {
-  font-weight: 600;
-  font-size: 18px;
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  font-size: 14px;
-}
-
-.nav-right a {
-  text-decoration: none;
-  color: #111827;
-}
-
-.nav-right a:hover {
-  text-decoration: underline;
-}
-
-.nav-signup {
-  padding: 8px 18px;
-  border-radius: 999px;
-  border: 1px solid #9ca38f;
-  background-color: #e3ead8;
-  text-decoration: none;
-}
-
-/* MAIN SPLIT LAYOUT */
+/* MAIN SPLIT LAYOUT FOR AUTH PAGES */
 
 .login-layout {
   display: flex;
@@ -159,21 +89,30 @@ input:focus {
   background-color: #28582a;
 }
 
-/* MOBILE */
-
-@media screen and (max-width: 768px) {
-  .login-layout {
-    flex-direction: column;
-  }
-
-  .image-panel {
-    display: none;
-  }
-
-  .top-nav {
-    padding: 0 24px;
-  }
+.auth-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
 }
+
+.auth-text {
+  font-size: 14px;
+  color: #4b5563;
+  text-align: center;
+  margin: 0;
+}
+
+.auth-link {
+  color: #2f6b32;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
 
 /* REGISTER PAGE — CENTERED VERSION */
 
@@ -188,4 +127,16 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* MOBILE AUTH LAYOUT */
+
+@media screen and (max-width: 768px) {
+  .login-layout {
+    flex-direction: column;
+  }
+
+  .image-panel {
+    display: none;
+  }
 }
