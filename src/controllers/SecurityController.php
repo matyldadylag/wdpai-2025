@@ -7,7 +7,6 @@ class SecurityController extends AppController {
     private $userRepository;
 
     public function __construct() {
-        // Przygotowanie repozytorium dla metod kontrolera
         $this->userRepository = new UserRepository();
     }
 
@@ -29,7 +28,7 @@ class SecurityController extends AppController {
             ]);
         }
 
-        // Create the repository and fetch the user by email
+        // Fetch the user by email
         $user = $this->userRepository->getUserByEmail($email);
 
         // Show error if the user does not exist or the password is incorrect
@@ -39,11 +38,15 @@ class SecurityController extends AppController {
             ]);
         }
 
-        // If credentials are correct save user info to session
-        // TODO User sessions
+        // If credentials are correct, save user info to session
+        $_SESSION['user'] = [
+            'id'    => $user['id'] ?? null,
+            'name'  => $user['name'] ?? null,
+            'email' => $user['email'] ?? null,
+        ];
 
-        // Render the dashboard
-        return $this->render("dashboard");
+        // Redirect to dashboard (no re-submission on refresh)
+        $this->redirect('dashboard');
     }
 
     public function register()
@@ -98,5 +101,19 @@ class SecurityController extends AppController {
         return $this->render("login", [
             "success" => ["User has been registered successfully"]
         ]);
+    }
+
+    public function logout()
+    {
+        // Clear session data
+        $_SESSION = [];
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_destroy();
+        }
+
+        // Start a fresh session to avoid errors on pages expecting $_SESSION
+        session_start();
+
+        $this->redirect('login');
     }
 }

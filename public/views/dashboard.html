@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="public/styles/main.css" />
   </head>
   <body>
@@ -14,6 +14,15 @@
         <li>USERS</li>
         <li>REPORTS</li>
       </ul>
+      <div>
+        <?php if (isset($user)): ?>
+        <span
+          >Hi,
+          <?= htmlspecialchars($user['name'] ?? $user['email']) ?></span
+        >
+        <?php endif; ?>
+        <a href="/logout">Logout</a>
+      </div>
     </nav>
     <div class="container">
       <aside>

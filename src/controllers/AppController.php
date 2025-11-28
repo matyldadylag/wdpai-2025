@@ -13,6 +13,33 @@ class AppController {
         return $_SERVER["REQUEST_METHOD"] === 'POST';
     }
 
+    // Simple redirect helper
+    protected function redirect(string $path): void
+    {
+        header("Location: /" . ltrim($path, '/'));
+        exit();
+    }
+
+    // Is user logged in?
+    protected function isAuthenticated(): bool
+    {
+        return isset($_SESSION['user']);
+    }
+
+    // Get current user data from session
+    protected function getUser(): ?array
+    {
+        return $_SESSION['user'] ?? null;
+    }
+
+    // Require login for protected pages
+    protected function requireLogin(): void
+    {
+        if (!$this->isAuthenticated()) {
+            $this->redirect('login');
+        }
+    }
+
     // Render a given HTML template and pass variables to it
     protected function render(string $template = null, array $variables = [])
     {

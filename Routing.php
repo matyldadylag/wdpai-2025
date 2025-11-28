@@ -16,6 +16,10 @@ class Routing {
             'controller' => 'SecurityController',
             'action' => 'register'
         ],
+        'logout' => [
+            'controller' => 'SecurityController',
+            'action' => 'logout'
+        ],
         'dashboard' => [
             'controller' => 'DashboardController',
             'action' => 'index'
@@ -25,19 +29,20 @@ class Routing {
     public static function run(string $path) {
     // path i regex coś przetworzyć
     // pozbyć się switchcase'a
-    switch ($path) {
-        case 'dashboard':
-        case 'login':
-        case 'register':
-            $controller = Routing::$routes[$path]['controller'];
-            $action = Routing::$routes[$path]['action'];
+        switch ($path) {
+            case 'dashboard':
+            case 'login':
+            case 'register':
+            case 'logout':
+                $controller = Routing::$routes[$path]['controller'];
+                $action = Routing::$routes[$path]['action'];
 
-            $controllerObj = new $controller;
-            $controllerObj->$action();
-            break;
-    default:
-        include 'public/views/404.html';
-        break;
+                $controllerObj = new $controller;
+                $controllerObj->$action();
+                break;
+            default:
+                include 'public/views/404.html';
+                break;
         } 
     }
 }
