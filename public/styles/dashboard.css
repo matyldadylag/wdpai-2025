@@ -1,0 +1,309 @@
+/* DASHBOARD LAYOUT */
+
+.dashboard-layout {
+  min-height: calc(100vh - 72px);
+  padding: 24px 48px 32px;
+  box-sizing: border-box;
+  background-color: #f9fafb;
+}
+
+/* HEADER */
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dashboard-title {
+  margin: 0 0 4px 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.dashboard-subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.dashboard-summary {
+  display: flex;
+  gap: 12px;
+}
+
+.summary-pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background-color: #e5f3e6;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summary-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4b5563;
+}
+
+.summary-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #14532d;
+}
+
+/* GRID */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr;
+  gap: 24px;
+}
+
+/* CARDS */
+
+.card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  padding: 20px 18px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.card-description {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.card-tag {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: #e5f3e6;
+  color: #166534;
+  font-weight: 500;
+}
+
+.card-tag-soft {
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+
+/* LISTS */
+
+.plants-list {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.plant-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.plant-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.plant-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.plant-task {
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.plant-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.plant-time {
+  white-space: nowrap;
+}
+
+.plant-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: #dcfce7;
+  color: #166534;
+  font-weight: 500;
+}
+
+.plant-badge-soft {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+/* UPCOMING GROUPS */
+
+.upcoming-group {
+  margin-top: 8px;
+}
+
+.upcoming-date {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* BUTTONS */
+
+.card-button {
+  margin-top: 8px;
+  align-self: flex-start;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: none;
+  background-color: #2f6b32;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.card-button:hover {
+  background-color: #28582a;
+}
+
+.card-button.secondary {
+  background-color: #ffffff;
+  color: #2f6b32;
+  border: 1px solid #2f6b32;
+}
+
+.card-button.secondary:hover {
+  background-color: #f3f4f6;
+}
+
+/* MY PLANTS CARD */
+
+.my-plants-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.primary-link,
+.secondary-link {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.primary-link {
+  font-weight: 600;
+  color: #2f6b32;
+}
+
+.primary-link:hover {
+  text-decoration: underline;
+}
+
+.secondary-link {
+  color: #4b5563;
+}
+
+.secondary-link:hover {
+  text-decoration: underline;
+}
+
+.my-plants-summary {
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.summary-block {
+  min-width: 120px;
+}
+
+.summary-number {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.summary-text {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* NAV SMALL TWEAKS (OPTIONAL) */
+
+.nav-right a {
+  text-decoration: none;
+  color: #4b5563;
+  font-size: 14px;
+  margin-left: 16px;
+}
+
+.nav-right a:hover {
+  text-decoration: underline;
+}
+
+.nav-link-active {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard-layout {
+    padding: 16px 16px 24px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

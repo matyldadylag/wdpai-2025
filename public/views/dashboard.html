@@ -3,32 +3,191 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <title>Planta – Dashboard</title>
     <link rel="stylesheet" type="text/css" href="public/styles/main.css" />
+    <link rel="stylesheet" type="text/css" href="public/styles/dashboard.css" />
   </head>
   <body>
-    <nav>
-      <p>LOGO</p>
-      <ul>
-        <li>DASHBOARD</li>
-        <li>USERS</li>
-        <li>REPORTS</li>
-      </ul>
-      <div>
-        <?php if (isset($user)): ?>
-        <span
-          >Hi,
-          <?= htmlspecialchars($user['name'] ?? $user['email']) ?></span
-        >
-        <?php endif; ?>
-        <a href="/logout">Logout</a>
+    <!-- TOP NAVBAR (SAME STYLE AS LOGIN) -->
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="logo-mark"></div>
+        <span class="logo-text">Planta</span>
       </div>
-    </nav>
-    <div class="container">
-      <aside>
-        <p>PODRECZNE MENU</p>
-      </aside>
-      <main></main>
-    </div>
+
+      <nav class="nav-right">
+        <a href="/dashboard" class="nav-link-active">Dashboard</a>
+        <a href="/my-plants">My Plants</a>
+        <a href="/calendar">Calendar</a>
+        <a href="/settings">Settings</a>
+        <a href="/logout" class="nav-signup">Log out</a>
+      </nav>
+    </header>
+
+    <main class="dashboard-layout">
+      <!-- PAGE HEADER -->
+      <section class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">Today’s care</h1>
+          <p class="dashboard-subtitle">
+            See which plants need attention today and plan the upcoming days.
+          </p>
+        </div>
+        <div class="dashboard-summary">
+          <div class="summary-pill">
+            <span class="summary-label">Today</span>
+            <!-- TODO: replace with count from DB -->
+            <span class="summary-value">3 plants</span>
+          </div>
+          <div class="summary-pill">
+            <span class="summary-label">This week</span>
+            <!-- TODO: replace with count from DB -->
+            <span class="summary-value">8 tasks</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- MAIN GRID -->
+      <section class="dashboard-grid">
+        <!-- COLUMN 1: TODAY'S REMINDERS -->
+        <section class="card card-today">
+          <header class="card-header">
+            <h2 class="card-title">Plants to care for today</h2>
+            <span class="card-tag">Today</span>
+          </header>
+          <p class="card-description">
+            Watering, misting and fertilizing tasks that are due today.
+          </p>
+
+          <!-- TODO: loop over today's reminders from DB -->
+          <ul class="plants-list">
+            <li class="plant-item">
+              <div class="plant-main">
+                <span class="plant-name">Monstera deliciosa</span>
+                <span class="plant-task">Water thoroughly</span>
+              </div>
+              <div class="plant-meta">
+                <span class="plant-time">Due this morning</span>
+                <span class="plant-badge">High priority</span>
+              </div>
+            </li>
+
+            <li class="plant-item">
+              <div class="plant-main">
+                <span class="plant-name">Snake plant</span>
+                <span class="plant-task">Check soil moisture</span>
+              </div>
+              <div class="plant-meta">
+                <span class="plant-time">Any time today</span>
+                <span class="plant-badge plant-badge-soft">Low water</span>
+              </div>
+            </li>
+
+            <li class="plant-item">
+              <div class="plant-main">
+                <span class="plant-name">Fiddle leaf fig</span>
+                <span class="plant-task">Mist leaves</span>
+              </div>
+              <div class="plant-meta">
+                <span class="plant-time">This evening</span>
+                <span class="plant-badge">Humidity</span>
+              </div>
+            </li>
+          </ul>
+
+          <button class="card-button">View all today’s tasks</button>
+        </section>
+
+        <!-- COLUMN 2: UPCOMING CARE -->
+        <section class="card card-upcoming">
+          <header class="card-header">
+            <h2 class="card-title">Upcoming care</h2>
+            <span class="card-tag card-tag-soft">Next days</span>
+          </header>
+          <p class="card-description">
+            A quick look at what’s coming in the next few days so you can plan
+            ahead.
+          </p>
+
+          <!-- TODO: loop over upcoming tasks (e.g. next 7 days) from DB -->
+          <div class="upcoming-group">
+            <h3 class="upcoming-date">Tomorrow</h3>
+            <ul class="plants-list">
+              <li class="plant-item">
+                <div class="plant-main">
+                  <span class="plant-name">Pothos</span>
+                  <span class="plant-task">Rotate for light</span>
+                </div>
+                <div class="plant-meta">
+                  <span class="plant-time">Light care</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="upcoming-group">
+            <h3 class="upcoming-date">In 3 days</h3>
+            <ul class="plants-list">
+              <li class="plant-item">
+                <div class="plant-main">
+                  <span class="plant-name">Aloe vera</span>
+                  <span class="plant-task">Water lightly</span>
+                </div>
+                <div class="plant-meta">
+                  <span class="plant-time">Scheduled care</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="upcoming-group">
+            <h3 class="upcoming-date">This weekend</h3>
+            <ul class="plants-list">
+              <li class="plant-item">
+                <div class="plant-main">
+                  <span class="plant-name">Peace lily</span>
+                  <span class="plant-task">Fertilize</span>
+                </div>
+                <div class="plant-meta">
+                  <span class="plant-time">Once a month</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <button class="card-button secondary">Open calendar view</button>
+        </section>
+
+        <!-- COLUMN 3: MY PLANTS QUICK ENTRY -->
+        <section class="card card-my-plants">
+          <header class="card-header">
+            <h2 class="card-title">My plants</h2>
+          </header>
+          <p class="card-description">
+            Add new plants, edit existing ones and see the full overview of your
+            collection.
+          </p>
+
+          <div class="my-plants-actions">
+            <a href="/my-plants" class="primary-link"> Go to My Plants </a>
+            <a href="/my-plants#add" class="secondary-link">
+              + Add a new plant
+            </a>
+          </div>
+
+          <div class="my-plants-summary">
+            <!-- TODO: replace with stats from DB -->
+            <div class="summary-block">
+              <span class="summary-number">12</span>
+              <span class="summary-text">Plants in collection</span>
+            </div>
+            <div class="summary-block">
+              <span class="summary-number">4</span>
+              <span class="summary-text">Need care today</span>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
   </body>
 </html>

@@ -1,6 +1,8 @@
 <?php
 require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/DashboardController.php';
+require_once 'src/controllers/MyPlantsController.php';
+require_once 'src/controllers/CalendarController.php';
 
 // Zaprogramowac tak żeby te obiekty controller się nie tworzyły bez końca, architektura singletona
 // pozbyć się switchcase'a
@@ -24,6 +26,14 @@ class Routing {
             'controller' => 'DashboardController',
             'action' => 'index'
         ],
+        'my-plants' => [
+            'controller' => 'MyPlantsController',
+            'action' => 'index'
+        ],
+        'calendar' => [
+            'controller' => 'CalendarController',
+            'action' => 'index'
+        ],
     ];
 
     public static function run(string $path) {
@@ -34,6 +44,8 @@ class Routing {
             case 'login':
             case 'register':
             case 'logout':
+            case 'my-plants':
+            case 'calendar':
                 $controller = Routing::$routes[$path]['controller'];
                 $action = Routing::$routes[$path]['action'];
 
