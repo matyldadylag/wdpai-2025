@@ -3,22 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Planta – Login</title>
     <link rel="stylesheet" type="text/css" href="public/styles/main.css" />
-    <link rel="stylesheet" type="text/css" href="public/styles/login.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="public/styles/login-register.css"
+    />
   </head>
   <body>
-    <form action="/login" method="POST">
-      <h1 id="title">Login</h1>
-      <input name="email" type="email" placeholder="E-mail address" />
-      <input name="password" type="password" placeholder="Password" />
-      <?php if (!empty($messages)): ?>
-      <?php foreach ($messages as $message): ?>
-      <p class="error"><?= htmlspecialchars($message) ?></p>
-      <?php endforeach; ?>
-      <?php endif; ?>
-      <button type="submit">Login</button>
-      <a href="/register">Register</a>
-    </form>
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="logo-mark"></div>
+        <span class="logo-text">Planta</span>
+      </div>
+
+      <nav class="nav-right">
+        <a href="#">Home</a>
+        <a href="#">My Plants</a>
+        <a href="#">Calendar</a>
+        <a href="#">Settings</a>
+        <a href="/register" class="nav-signup">Sign up</a>
+      </nav>
+    </header>
+
+    <main class="login-layout">
+      <!-- LEFT SIDE: FORM -->
+      <section class="login-panel">
+        <form action="/login" method="POST" class="login-form">
+          <h1>Welcome back!</h1>
+
+          <label class="field">
+            <span class="field-label">Email</span>
+            <input name="email" type="email" placeholder="Email" />
+          </label>
+
+          <label class="field">
+            <span class="field-label">Password</span>
+            <input name="password" type="password" placeholder="Password" />
+          </label>
+
+          <?php if (!empty($messages)): ?>
+          <?php foreach ($messages as $message): ?>
+          <p class="error"><?= htmlspecialchars($message) ?></p>
+          <?php endforeach; ?>
+          <?php endif; ?>
+
+          <?php if (!empty($success)): ?>
+          <?php foreach ($success as $message): ?>
+          <p class="success"><?= htmlspecialchars($message) ?></p>
+          <?php endforeach; ?>
+          <?php endif; ?>
+
+          <button type="submit" class="btn-login">Log in</button>
+        </form>
+      </section>
+
+      <!-- RIGHT SIDE: IMAGE -->
+      <section class="image-panel"></section>
+    </main>
   </body>
 </html>

@@ -81,7 +81,7 @@ class SecurityController extends AppController {
         }
 
         // Check if user with this email already exists
-        $existingUser = $this->$userRepository->getUserByEmail($email);
+        $existingUser = $this->userRepository->getUserByEmail($email);
         if ($existingUser) {
             return $this->render("register", [
                 "messages" => ["User with this email already exists"]
@@ -92,11 +92,11 @@ class SecurityController extends AppController {
         $hashedPassword = password_hash($password1, PASSWORD_BCRYPT);
 
         // Insert the new user into the database
-        $userRepository->createUser($name, $email, $hashedPassword);
+        $this->userRepository->createUser($name, $email, $hashedPassword);
 
         // Redirect user to login view with a message
         return $this->render("login", [
-            "messages" => ["User has been registered successfully"]
+            "success" => ["User has been registered successfully"]
         ]);
     }
 }
