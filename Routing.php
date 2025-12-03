@@ -34,12 +34,19 @@ class Routing {
             'controller' => 'CalendarController',
             'action' => 'index'
         ],
+        'search-plants' => [
+            'controller' => 'DashboardController',
+            'action' => 'search'
+        ],
     ];
 
     public static function run(string $path) {
-    // path i regex coś przetworzyć
-    // pozbyć się switchcase'a
+    // parametr id i przekazywanie z pomocą regex
+    // pozbyć się switchcase'a 0 in-array($path, statyczna tablica routing::routes)
+    // singleton
+    // BINGO
         switch ($path) {
+            case 'search-plants':
             case 'dashboard':
             case 'login':
             case 'register':
