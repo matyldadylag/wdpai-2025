@@ -10,7 +10,7 @@ class Database {
 
     public function __construct()
     {
-        // Read from .env with defaults if missing
+        // Read from .env, with defaults if missing
         $this->username = $_ENV['DB_USER'] ?? 'docker';
         $this->password = $_ENV['DB_PASS'] ?? 'docker';
         $this->host     = $_ENV['DB_HOST'] ?? 'localhost';
@@ -18,6 +18,7 @@ class Database {
         $this->port     = $_ENV['DB_PORT'] ?? '5432';
     }
 
+    // Connect to the database
     public function connect()
     {
         try {
