@@ -2,7 +2,7 @@
 
 class AppController {
 
-    // Check the HTTP request methods
+    // Check HTTP request types
     protected function isGet(): bool
     {
         return $_SERVER["REQUEST_METHOD"] === 'GET';
@@ -20,7 +20,7 @@ class AppController {
         exit();
     }
 
-    // Is user logged in?
+    // Check if user is logged in
     protected function isAuthenticated(): bool
     {
         return isset($_SESSION['user']);

@@ -8,9 +8,10 @@ class CalendarController extends AppController {
         // Require user to be logged in
         $this->requireLogin();
 
-        // Optionally pass user data to the view
+        // Retrieve data about the currently logged-in user
         $user = $this->getUser();
 
+        // Render view
         return $this->render("calendar", [
             'user' => $user
         ]);

@@ -8,9 +8,10 @@ class MyPlantsController extends AppController {
         // Require user to be logged in
         $this->requireLogin();
 
-        // Optionally pass user data to the view
+        // Retrieve data about the currently logged-in user
         $user = $this->getUser();
 
+        // Render view
         return $this->render("my-plants", [
             'user' => $user
         ]);

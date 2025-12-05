@@ -1,42 +1,44 @@
 <?php
 
-require_once "config.php";
-
 // TODO SINGLETON
-
 class Database {
     private $username;
     private $password;
     private $host;
     private $database;
+    private $port;
 
     public function __construct()
     {
-        $this->username = USERNAME;
-        $this->password = PASSWORD;
-        $this->host = HOST;
-        $this->database = DATABASE;
+        // Read from .env with defaults if missing
+        $this->username = $_ENV['DB_USER'] ?? 'docker';
+        $this->password = $_ENV['DB_PASS'] ?? 'docker';
+        $this->host     = $_ENV['DB_HOST'] ?? 'localhost';
+        $this->database = $_ENV['DB_NAME'] ?? 'db';
+        $this->port     = $_ENV['DB_PORT'] ?? '5432';
     }
 
     public function connect()
     {
         try {
+            $dsn = "pgsql:host={$this->host};port={$this->port};dbname={$this->database}";
+
             $conn = new PDO(
-                "pgsql:host=$this->host;port=5432;dbname=$this->database",
+                $dsn,
                 $this->username,
                 $this->password,
                 ["sslmode"  => "prefer"]
             );
 
-            // set the PDO error mode to exception
+            // Set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conn;
         }
         catch(PDOException $e) {
-            // Zdefininiować stronę błędu zamiast die, błąd z grupy 500
+            // TODO custom 500 error page instead of die()
             die("Connection failed: " . $e->getMessage());
         }
     }
 
-    // TODO metoda disconnect
+    // TODO disconnect method
 }

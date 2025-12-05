@@ -6,6 +6,7 @@ require_once __DIR__.'/../repository/UserRepository.php';
 class SecurityController extends AppController {
     private $userRepository;
 
+    // Create new repository instance
     public function __construct() {
         $this->userRepository = new UserRepository();
     }
