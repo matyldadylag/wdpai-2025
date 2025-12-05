@@ -34,7 +34,7 @@ class DashboardController extends AppController {
             header('Content-type: application/json');
             http_response_code(200);
 
-            echo json_encode($this->cardsRepository->getCardsByTitle($decoded['search']));
+            echo json_encode($this->plantsRepository->getPlantsByName($decoded['search']));
         }
     }
 }

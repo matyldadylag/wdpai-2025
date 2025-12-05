@@ -51,20 +51,39 @@ class Routing {
         ],
         'search-plants' => [
             'controller' => 'DashboardController',
-            'action' => 'search'
+            'action'     => 'search'
         ],
     ];
 
-    public static function run(string $path) {
-        if (array_key_exists($path, self::$routes)) {
+    public function run(string $path) {
+        if (array_key_exists($path, self::$routes) && !isset(self::$routes[$path]['pattern'])) {
             $controllerName = self::$routes[$path]['controller'];
-            $action = self::$routes[$path]['action'];
+            $action         = self::$routes[$path]['action'];
 
             $controller = new $controllerName();
             $controller->$action();
-        } else {
-            include 'public/views/404.html';
+
+            return;
         }
+
+        foreach (self::$routes as $route) {
+            if (!isset($route['pattern'])) {
+                continue;
+            }
+
+            if (preg_match($route['pattern'], $path, $matches)) {
+                $controllerName = $route['controller'];
+                $action         = $route['action'];
+
+                $controller = new $controllerName();
+
+                $params = array_slice($matches, 1);
+
+                $controller->$action(...$params);
+                return;
+            }
+        }
+
+        include 'public/views/404.html';
     }
 }
-    // parametr id i przekazywanie z pomocą regex
