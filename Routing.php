@@ -4,12 +4,27 @@ require_once 'src/controllers/DashboardController.php';
 require_once 'src/controllers/MyPlantsController.php';
 require_once 'src/controllers/CalendarController.php';
 
-// Zaprogramowac tak żeby te obiekty controller się nie tworzyły bez końca, architektura singletona
-// pozbyć się switchcase'a
-// path ma byc regex string
-
 class Routing {
-    public static $routes = [
+    private static ?Routing $instance = null;
+
+    public static function getInstance(): Routing
+    {
+        if (self::$instance === null) {
+            self::$instance = new Routing();
+        }
+        return self::$instance;
+    }
+
+    private function __construct() {}
+
+    private function __clone() {}
+
+    public function __wakeup()
+    {
+        throw new \Exception("Cannot unserialize a singleton.");
+    }
+
+    private static array $routes = [
         'login' => [
             'controller' => 'SecurityController',
             'action' => 'login'
@@ -41,27 +56,15 @@ class Routing {
     ];
 
     public static function run(string $path) {
-    // parametr id i przekazywanie z pomocą regex
-    // pozbyć się switchcase'a 0 in-array($path, statyczna tablica routing::routes)
-    // singleton
-    // BINGO
-        switch ($path) {
-            case 'search-plants':
-            case 'dashboard':
-            case 'login':
-            case 'register':
-            case 'logout':
-            case 'my-plants':
-            case 'calendar':
-                $controller = Routing::$routes[$path]['controller'];
-                $action = Routing::$routes[$path]['action'];
+        if (array_key_exists($path, self::$routes)) {
+            $controllerName = self::$routes[$path]['controller'];
+            $action = self::$routes[$path]['action'];
 
-                $controllerObj = new $controller;
-                $controllerObj->$action();
-                break;
-            default:
-                include 'public/views/404.html';
-                break;
-        } 
+            $controller = new $controllerName();
+            $controller->$action();
+        } else {
+            include 'public/views/404.html';
+        }
     }
 }
+    // parametr id i przekazywanie z pomocą regex
