@@ -14,3 +14,7 @@ Helps you take care of your houseplants!
 <img src="public/images/Planta_UI_Design_page-0008.jpg" alt="" width="300"/>
 <img src="public/images/Planta_UI_Design_page-0009.jpg" alt="" width="300"/>
 <img src="public/images/Planta_UI_Design_page-0010.jpg" alt="" width="300"/>
+
+# Jak mi idzie bingo?
+
+<img src="public/images/bingo.png" alt="" width="300"/>

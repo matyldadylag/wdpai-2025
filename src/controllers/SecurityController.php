@@ -39,6 +39,9 @@ class SecurityController extends AppController {
             ]);
         }
 
+        // New session identificator
+        session_regenerate_id(true);
+
         // If credentials are correct, save user info to session
         $_SESSION['user'] = [
             'id'    => $user['id'] ?? null,
