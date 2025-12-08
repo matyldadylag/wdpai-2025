@@ -31,7 +31,7 @@ body {
   height: 28px;
   border-radius: 999px;
   border: 1px solid #d1d5db;
-  background-image: url("/public/images/logo.png");
+  background-image: url("/public/favicon.ico");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
