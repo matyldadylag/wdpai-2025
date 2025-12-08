@@ -55,6 +55,10 @@ class Routing {
             'controller' => 'CalendarController',
             'action' => 'index'
         ],
+        'my-plants/create' => [
+            'controller' => 'MyPlantsController',
+            'action' => 'create'
+        ],
     ];
 
     // Main routing method

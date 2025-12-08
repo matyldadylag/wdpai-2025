@@ -34,10 +34,11 @@
           </p>
         </div>
 
-        <!-- optional: simple "add" button -->
-        <a href="/my-plants/new" class="btn-primary">Add plant</a>
+        <!-- "ADD" BUTTON -->
+        <button type="button" class="btn-primary" id="openAddPlant">
+          Add plant
+        </button>
       </section>
-
       <section class="card my-plants-list-card">
         <?php if (empty($plants)): ?>
         <p class="empty-state">You haven’t added any plants yet.</p>
@@ -60,6 +61,49 @@
         </ul>
         <?php endif; ?>
       </section>
+
+      <!-- ADD PLANT MODAL -->
+      <div id="addPlantModal" class="modal-backdrop hidden">
+        <div class="modal">
+          <div class="modal-header">
+            <h2 class="modal-title">Add a new plant</h2>
+          </div>
+          <form method="post" action="/my-plants/create" class="modal-form">
+            <div class="form-field">
+              <div class="form-field">
+                <label for="species_id">Species</label>
+                <select id="species_id" name="species_id" required>
+                  <option value="" disabled selected>Select species</option>
+
+                  <?php foreach ($allSpecies as $species): ?>
+                  <option
+                    value="<?= htmlspecialchars($species['species_id']) ?>"
+                  >
+                    <?= htmlspecialchars($species['species_name']) ?>
+                  </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="plant_name">Plant name (optional)</label>
+              <input
+                type="text"
+                id="plant_name"
+                name="plant_name"
+                placeholder="Sansa"
+              />
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="btn-secondary" id="cancelAddPlant">
+                Cancel
+              </button>
+              <button type="submit" class="btn-primary">Save plant</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
+    <script src="public/scripts/my-plants.js"></script>
   </body>
 </html>

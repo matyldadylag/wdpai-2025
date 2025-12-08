@@ -28,4 +28,21 @@ class PlantsRepository extends Repository {
         // Return plants
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Insert a new plant into the database
+    public function createPlant(int $userId, int $speciesId, string $plantName): void
+    {
+        // Prepare SQL statement to insert a new user
+        $stmt = $this->database->connect()->prepare('
+            INSERT INTO plants (user_id, species_id, plant_name)
+            VALUES (?, ?, ?);
+        ');
+
+        // Execute the prepared statement with provided data
+        $stmt->execute([
+            $userId,
+            $speciesId,
+            $plantName
+        ]);
+    }
 }
