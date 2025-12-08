@@ -55,10 +55,6 @@ class Routing {
             'controller' => 'CalendarController',
             'action' => 'index'
         ],
-        'search-plants' => [
-            'controller' => 'DashboardController',
-            'action'     => 'search'
-        ],
     ];
 
     // Main routing method

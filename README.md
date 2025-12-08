@@ -17,4 +17,4 @@ Helps you take care of your houseplants!
 
 # Jak mi idzie bingo?
 
-<img src="public/images/bingo.png" alt="" width="300"/>
+<img src="public/images/bingo.png" alt="" width="500"/>

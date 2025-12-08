@@ -24,23 +24,4 @@ class DashboardController extends AppController {
             'user' => $user
         ]);
     }
-
-    public function search()
-    {
-        // Check the request's Content-Type header to ensure it's JSON.
-        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
-
-        if ($contentType === "application/json") {
-            // Read raw JSON and decode it into an associative array
-            $content = trim(file_get_contents("php://input"));
-            $decoded = json_decode($content, true);
-
-            // Set response type and HTTP status code
-            header('Content-type: application/json');
-            http_response_code(200);
-
-            // Return search results
-            echo json_encode($this->plantsRepository->getPlantsByName($decoded['search']));
-        }
-    }
 }

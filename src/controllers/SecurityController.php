@@ -44,8 +44,8 @@ class SecurityController extends AppController {
 
         // If credentials are correct, save user info to session
         $_SESSION['user'] = [
-            'id'    => $user['id'] ?? null,
-            'name'  => $user['name'] ?? null,
+            'id'    => $user['user_id'] ?? null,
+            'name'  => $user['user_name'] ?? null,
             'email' => $user['email'] ?? null,
         ];
 

@@ -3,21 +3,29 @@
 require_once 'Repository.php';
 
 class PlantsRepository extends Repository {
-    // Search for specific plant by request with JSON
-    public function getPlantsByName(string $searchString)
+    // Get all plants for a given user
+    public function getPlantsForUser(int $userId): array
     {
-        // Convert to lowercase and add wildcard characters
-        $searchString = '%' . strtolower($searchString) . '%';
+        // Connect to the database
+        $conn = $this->database->connect();
 
-        // Execute SQL statement with binded parameters
-        $stmt = $this->database->connect()->prepare('
-            SELECT * FROM plants
-            WHERE LOWER(name) LIKE :search OR LOWER(description) LIKE :search
+        // Prepare SQL query
+        $stmt = $conn->prepare('
+            SELECT 
+                p.plant_id,
+                p.plant_name,
+                s.species_name
+            FROM plants p
+            LEFT JOIN species s ON p.species_id = s.species_id
+            WHERE p.user_id = :user_id
+            ORDER BY p.plant_id ASC
         ');
-        $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
+
+        // Bind parameters and execute query
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Fetch all matching rows as an associative array and return them
+        // Return plants
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

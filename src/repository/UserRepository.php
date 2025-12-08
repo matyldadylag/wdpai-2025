@@ -9,7 +9,7 @@ class UserRepository extends Repository
     {
         // Prepare SQL statement to insert a new user
         $stmt = $this->database->connect()->prepare('
-            INSERT INTO users (name, email, password)
+            INSERT INTO users (user_name, email, password)
             VALUES (?, ?, ?);
         ');
 
