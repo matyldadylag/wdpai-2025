@@ -1,18 +1,58 @@
-CREATE TABLE users (
-    user_id SERIAL PRIMARY KEY,
-    user_name TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-);
+erDiagram
+    USERS ||--o{ PLANTS : owns
+    SPECIES ||--o{ PLANTS : "type of"
+    PLANTS ||--o{ PLANT_TASK_SETTINGS : "has settings"
+    TASKS ||--o{ PLANT_TASK_SETTINGS : "configured for"
+    SPECIES ||--o{ SPECIES_TASK_ADVICE : "has advice"
+    TASKS ||--o{ SPECIES_TASK_ADVICE : "advice about"
+    PLANTS ||--o{ TASK_HISTORY : "has history"
+    TASKS ||--o{ TASK_HISTORY : "history of"
 
-CREATE TABLE species (
-    species_id SERIAL PRIMARY KEY,
-    species_name TEXT NOT NULL UNIQUE
-);
+    USERS {
+        int user_id PK
+        varchar email
+        varchar password
+        varchar user_name
+    }
 
-CREATE TABLE plants (
-    plant_id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    species_id INT NOT NULL REFERENCES species(id) ON DELETE RESTRICT,
-    plant_name TEXT NOT NULL
-);
+    PLANTS {
+        int plant_id PK
+        int user_id FK
+        int species_id FK
+        varchar plant_name
+        date date_added
+        varchar photoUrl
+    }
+
+    SPECIES {
+        int species_id PK
+        varchar species_name
+    }
+
+    TASKS {
+        int task_id PK
+        varchar task_name
+    }
+
+    SPECIES_TASK_ADVICE {
+        int species_task_advice_id PK
+        int task_id FK
+        int species_id FK
+        int advised_frequency_days
+    }
+
+    PLANT_TASK_SETTINGS {
+        int plant_task_settings_id PK
+        int plant_id FK
+        int task_id FK
+        int frequency_days
+    }
+
+    TASK_HISTORY {
+        int task_history_id PK
+        int plant_id FK
+        int task_id FK
+        datetime performed_at
+        varchar notes
+        int amount
+    }
