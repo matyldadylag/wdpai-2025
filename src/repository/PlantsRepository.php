@@ -14,6 +14,8 @@ class PlantsRepository extends Repository {
             SELECT 
                 p.plant_id,
                 p.plant_name,
+                p.date_added,
+                s.species_id,
                 s.species_name
             FROM plants p
             LEFT JOIN species s ON p.species_id = s.species_id
@@ -45,4 +47,82 @@ class PlantsRepository extends Repository {
             $plantName
         ]);
     }
+
+    // Get a given plant for a given user
+    public function getSinglePlantForUser(int $plantId, int $userId): ?array
+    {
+        // Connect to the database
+        $conn = $this->database->connect();
+
+        // Prepare SQL query
+        $stmt = $conn->prepare('
+            SELECT 
+                p.plant_id,
+                p.plant_name,
+                p.date_added,
+                p.species_id,
+                s.species_name
+            FROM plants p
+            LEFT JOIN species s ON p.species_id = s.species_id
+            WHERE p.plant_id = :plant_id
+            AND p.user_id = :user_id
+        ');
+
+        // Bind parameters and execute query
+        $stmt->bindParam(':plant_id', $plantId, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Return plant
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updatePlant(
+        int $plantId,
+        int $userId,
+        int $speciesId,
+        string $plantName,
+    ): void {
+        // Connect to the database
+        $conn = $this->database->connect();
+
+        // Prepare SQL query
+        $stmt = $conn->prepare('
+            UPDATE plants
+            SET species_id = :species_id,
+                plant_name = :plant_name
+            WHERE plant_id = :plant_id
+            AND user_id = :user_id
+        ');
+
+        // Bind parameters
+        $stmt->bindValue(':species_id', $speciesId, PDO::PARAM_INT);
+        $stmt->bindValue(':plant_name', $plantName, PDO::PARAM_STR);
+        $stmt->bindValue(':plant_id', $plantId, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+
+        // Execute query
+        $stmt->execute();
+    }
+
+    public function deletePlant(int $plantId, int $userId): void
+    {
+        // Connect to the database
+        $conn = $this->database->connect();
+
+        // Prepare SQL query
+        $stmt = $conn->prepare('
+            DELETE FROM plants
+            WHERE plant_id = :plant_id
+            AND user_id = :user_id
+        ');
+
+        // Bind parameters
+        $stmt->bindValue(':plant_id', $plantId, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+
+        // Execute query
+        $stmt->execute();
+    }
+
 }

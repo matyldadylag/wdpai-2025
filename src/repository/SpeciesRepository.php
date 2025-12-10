@@ -4,7 +4,7 @@ require_once 'Repository.php';
 
 class SpeciesRepository extends Repository {
     // Returns all plant species
-    public function findAll()
+    public function findAllSpecies()
     {
         $stmt = $this->database->connect()->prepare("
             SELECT species_id, species_name 
@@ -16,7 +16,7 @@ class SpeciesRepository extends Repository {
     }
 
     // Find species name by species id
-    public function findNameById($speciesId): string
+    public function findSpeciesNameById($speciesId): string
     {
         // Connect to database and prepare SQL query
         $stmt = $this->database->connect()->prepare('

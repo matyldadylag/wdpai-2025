@@ -59,6 +59,14 @@ class Routing {
             'controller' => 'MyPlantsController',
             'action' => 'create'
         ],
+        'my-plants/update' => [
+            'controller' => 'MyPlantsController',
+            'action'     => 'update'
+        ],
+        'my-plants/delete' => [
+            'controller' => 'MyPlantsController',
+            'action'     => 'delete'
+        ],
     ];
 
     // Main routing method

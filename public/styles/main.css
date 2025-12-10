@@ -26,6 +26,10 @@ body {
   gap: 8px;
 }
 
+.nav-link-active {
+  font-weight: 600;
+}
+
 .logo-mark {
   width: 28px;
   height: 28px;
@@ -56,6 +60,11 @@ body {
 }
 
 .nav-right a:hover {
+  text-decoration: underline;
+}
+
+.nav-right a.nav-link-active {
+  font-weight: 600;
   text-decoration: underline;
 }
 

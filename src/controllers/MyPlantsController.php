@@ -29,7 +29,7 @@ class MyPlantsController extends AppController {
         $plants = $this->plantsRepository->getPlantsForUser($userId);
 
         // Fetch all species list
-        $allSpecies = $this->speciesRepository->findAll();
+        $allSpecies = $this->speciesRepository->findAllSpecies();
 
         // Render view
         return $this->render("my-plants", [
@@ -70,7 +70,7 @@ class MyPlantsController extends AppController {
 
         // Fill plant name with default if user doesn't provide it
         if ($plantNameInput === '') {
-            $speciesName = $this->speciesRepository->findNameById($speciesId);
+            $speciesName = $this->speciesRepository->findSpeciesNameById($speciesId);
 
             $plantName = $speciesName;
         } else {
@@ -79,6 +79,103 @@ class MyPlantsController extends AppController {
 
         // Insert the new planta in the database
         $this->plantsRepository->createPlant($userId, $speciesId, $plantName);
+
+        // Redirect to My Plants page
+        return $this->redirect('/my-plants');
+    }
+
+    public function update()
+    {
+        // Require user to be logged in
+        $this->requireLogin();
+
+        // Get user information
+        $user = $this->getUser();
+        $userId = (int)$user['id'];
+
+        // GET: show update form
+        if ($this->isGet()) {
+            $plantIdRaw = $_GET['plant_id'] ?? null;
+            if (empty($plantIdRaw)) {
+                return $this->redirect('/my-plants');
+            }
+
+            $plantId = (int)$plantIdRaw;
+            $plant = $this->plantsRepository->getPlantForUser($plantId, $userId);
+
+            if (!$plant) {
+                return $this->redirect('/my-plants');
+            }
+
+            $allSpecies = $this->speciesRepository->findAll();
+
+            // Render view
+            return $this->render('update-plant', [
+                'user'       => $user,
+                'plant'      => $plant,
+                'allSpecies' => $allSpecies
+            ]);
+        }
+
+        // POST: update plant
+        $plantIdRaw   = $_POST['plant_id'] ?? null;
+        $speciesIdRaw = $_POST['species_id'] ?? null;
+        $plantNameRaw = $_POST['plant_name'] ?? '';
+
+        if (empty($plantIdRaw) || empty($speciesIdRaw)) {
+            return $this->redirect('/my-plants', [
+                'messages' => ['Fields cannot be empty']
+            ]);
+        }
+
+        $plantId   = (int)$plantIdRaw;
+        $speciesId = (int)$speciesIdRaw;
+        $plantNameInput = trim($plantNameRaw);
+        // same default logic as in create()
+        if ($plantNameInput === '') {
+            $speciesName = $this->speciesRepository->findSpeciesNameById($speciesId);
+            $plantName   = $speciesName;
+        } else {
+            $plantName = $plantNameInput;
+        }
+
+        $this->plantsRepository->updatePlant(
+            $plantId,
+            $userId,
+            $speciesId,
+            $plantName,
+        );
+
+        return $this->redirect('/my-plants');
+    }
+
+    public function delete()
+    {
+        // Require user to be logged in
+        $this->requireLogin();
+
+        // If the request is POST show My Plants page
+        if ($this->isGet()) {
+            return $this->redirect('/my-plants');
+        }
+
+        // Get user information
+        $user = $this->getUser();
+        $userId = (int)$user['id'];
+
+        // Get plant information
+        $plantIdRaw = $_POST['plant_id'] ?? null;
+
+        // If it doesn't exist show My Plants page
+        if (empty($plantIdRaw)) {
+            return $this->redirect('/my-plants');
+        }
+
+        // Type casting
+        $plantId = (int)$plantIdRaw;
+
+        // Delete plant from database
+        $this->plantsRepository->deletePlant($plantId, $userId);
 
         // Redirect to My Plants page
         return $this->redirect('/my-plants');

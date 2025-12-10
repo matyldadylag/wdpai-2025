@@ -20,7 +20,6 @@
         <a href="/dashboard">Dashboard</a>
         <a href="/my-plants" class="nav-link-active">My Plants</a>
         <a href="/calendar">Calendar</a>
-        <a href="/settings">Settings</a>
         <a href="/logout" class="nav-signup">Log out</a>
       </nav>
     </header>
@@ -46,15 +45,60 @@
         <ul class="plant-list">
           <?php foreach ($plants as $plant): ?>
           <li class="plant-list-item">
-            <div class="plant-list-main">
-              <span class="plant-list-name">
-                <?= htmlspecialchars($plant['plant_name']) ?>
-              </span>
-              <?php if (!empty($plant['species_name'])): ?>
-              <span class="plant-list-species">
-                <?= htmlspecialchars($plant['species_name']) ?>
-              </span>
+            <div class="plant-list-left">
+              <?php if (!empty($plant['photo_url'])): ?>
+              <img
+                src="<?= htmlspecialchars($plant['photo_url']) ?>"
+                alt="Photo of <?= htmlspecialchars($plant['plant_name'] ?: $plant['species_name']) ?>"
+                class="plant-list-photo"
+              />
               <?php endif; ?>
+
+              <div class="plant-list-main">
+                <span class="plant-list-name">
+                  <?= htmlspecialchars($plant['plant_name']) ?>
+                </span>
+
+                <?php if (!empty($plant['species_name'])): ?>
+                <span class="plant-list-species">
+                  <?= htmlspecialchars($plant['species_name']) ?>
+                </span>
+                <?php endif; ?>
+
+                <?php if (!empty($plant['date_added'])): ?>
+                <span class="plant-list-date">
+                  Added on
+                  <?= htmlspecialchars(date('Y-m-d', strtotime($plant['date_added']))) ?>
+                </span>
+                <?php endif; ?>
+              </div>
+            </div>
+
+            <div class="plant-list-actions">
+              <!-- EDIT (opens modal) -->
+              <button
+                type="button"
+                class="btn-ghost edit-plant-btn"
+                data-plant-id="<?= (int)$plant['plant_id'] ?>"
+                data-plant-name="<?= htmlspecialchars($plant['plant_name'], ENT_QUOTES) ?>"
+                data-species-id="<?= (int)$plant['species_id'] ?>"
+              >
+                Edit
+              </button>
+
+              <!-- DELETE (normal POST) -->
+              <form
+                method="post"
+                action="/my-plants/delete"
+                onsubmit="return confirm('Are you sure you want to delete this plant?');"
+              >
+                <input
+                  type="hidden"
+                  name="plant_id"
+                  value="<?= (int)$plant['plant_id'] ?>"
+                />
+                <button type="submit" class="btn-danger">Delete</button>
+              </form>
             </div>
           </li>
           <?php endforeach; ?>
@@ -99,6 +143,51 @@
                 Cancel
               </button>
               <button type="submit" class="btn-primary">Save plant</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- EDIT PLANT MODAL -->
+      <div id="editPlantModal" class="modal-backdrop hidden">
+        <div class="modal">
+          <div class="modal-header">
+            <h2 class="modal-title">Edit plant</h2>
+          </div>
+
+          <form
+            method="post"
+            action="/my-plants/update"
+            class="modal-form"
+            id="editPlantForm"
+          >
+            <input type="hidden" name="plant_id" id="edit_plant_id" />
+
+            <div class="form-field">
+              <label for="edit_species_id">Species</label>
+              <select id="edit_species_id" name="species_id" required>
+                <?php foreach ($allSpecies as $species): ?>
+                <option value="<?= htmlspecialchars($species['species_id']) ?>">
+                  <?= htmlspecialchars($species['species_name']) ?>
+                </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="edit_plant_name">Plant name (optional)</label>
+              <input
+                type="text"
+                id="edit_plant_name"
+                name="plant_name"
+                placeholder="Sansa"
+              />
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="btn-secondary" id="cancelEditPlant">
+                Cancel
+              </button>
+              <button type="submit" class="btn-primary">Save changes</button>
             </div>
           </form>
         </div>
