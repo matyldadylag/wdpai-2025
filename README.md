@@ -22,3 +22,31 @@ Helps you take care of your houseplants!
 # ERD
 
 <img src="public/images/ERD.png" alt="" width="500"/>
+
+# Wymagania
+
+- [ ] Dokumentacja w README.md
+- [ ] Architektura aplikacji MVC/front-backend, inna
+- [ ] Kod napisany obiektowo (część backendowa)
+- [ ] Diagram Erd
+- [ ] Git
+- [ ] Realizacja tematu
+- [ ] HTML
+- [ ] PostgreSQL
+- [ ] Złożoność bazy danych
+- [ ] Eksport bazy do pliku .sql
+- [ ] PHP
+- [ ] Java Script
+- [ ] Fetch API (Ajax)
+- [ ] Design
+- [ ] Responsywność
+- [ ] Logowanie
+- [ ] Sesja użytkownika
+- [ ] Uprawnienia użytkowników
+- [ ] Role użytkowników - co najmniej dwie
+- [ ] Wylogowywanie
+- [ ] Widoki, wyzwalacze, funkcje, transakcje
+- [ ] Akcje na referencjach (joiny w bazie danych)
+- [ ] Bezpieczeństwo
+- [ ] Brak replikacji kodu
+- [ ] Czystość i przejrzystość kodu
