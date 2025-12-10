@@ -19,34 +19,34 @@ Helps you take care of your houseplants!
 
 <img src="public/images/bingo.png" alt="" width="500"/>
 
-# ERD
-
-<img src="public/images/ERD.png" alt="" width="500"/>
-
 # Wymagania
 
 - [ ] Dokumentacja w README.md
 - [ ] Architektura aplikacji MVC/front-backend, inna
-- [ ] Kod napisany obiektowo (część backendowa)
-- [ ] Diagram Erd
-- [ ] Git
-- [ ] Realizacja tematu
-- [ ] HTML
-- [ ] PostgreSQL
-- [ ] Złożoność bazy danych
+- [x] Kod napisany obiektowo (część backendowa)
+- [x] Diagram ERD
+- [x] Git
+- [x] Realizacja tematu
+- [x] HTML
+- [x] PostgreSQL
+- [x] Złożoność bazy danych
 - [ ] Eksport bazy do pliku .sql
-- [ ] PHP
-- [ ] Java Script
+- [x] PHP
+- [x] Java Script
 - [ ] Fetch API (Ajax)
-- [ ] Design
+- [x] Design
 - [ ] Responsywność
-- [ ] Logowanie
+- [x] Logowanie
 - [ ] Sesja użytkownika
 - [ ] Uprawnienia użytkowników
-- [ ] Role użytkowników - co najmniej dwie
+- [x] Role użytkowników - co najmniej dwie
 - [ ] Wylogowywanie
 - [ ] Widoki, wyzwalacze, funkcje, transakcje
-- [ ] Akcje na referencjach (joiny w bazie danych)
+- [x] Akcje na referencjach (joiny w bazie danych)
 - [ ] Bezpieczeństwo
 - [ ] Brak replikacji kodu
-- [ ] Czystość i przejrzystość kodu
+- [x] Czystość i przejrzystość kodu
+
+## ERD
+
+<img src="public/images/ERD.png" alt="" width="300"/>
