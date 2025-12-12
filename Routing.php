@@ -67,6 +67,10 @@ class Routing {
             'controller' => 'MyPlantsController',
             'action'     => 'delete'
         ],
+        'calendar' => [
+            'controller' => 'CalendarController',
+            'action'     => 'index'
+        ],
     ];
 
     // Main routing method

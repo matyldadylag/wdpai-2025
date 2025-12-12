@@ -1,0 +1,196 @@
+/* LAYOUT */
+
+.calendar-layout {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.calendar-card {
+  padding: 16px 18px 18px;
+}
+
+/* HEADER */
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.calendar-month-label {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.calendar-nav-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.calendar-nav-btn {
+  width: 36px;
+  height: 24px;
+
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  line-height: 1;
+
+  font-size: 16px;
+
+  text-decoration: none;
+}
+
+/* WEEKDAYS ROW */
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 4px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+}
+
+/* GRID */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  font-size: 13px;
+}
+
+.calendar-cell {
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  padding: 6px 6px 8px;
+  min-height: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.calendar-cell:hover {
+  background-color: #f3f4f6;
+}
+
+.calendar-cell-empty {
+  border: none;
+  background: transparent;
+  cursor: default;
+}
+
+.calendar-cell-empty:hover {
+  background: transparent;
+}
+
+/* Selected day */
+
+.calendar-cell-selected {
+  border-color: #2f6b32;
+  box-shadow: 0 0 0 1px rgba(47, 107, 50, 0.15);
+  background-color: #edf5e8;
+}
+
+/* Day number & dots */
+
+.calendar-day-number {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.calendar-dots {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+/* Dots – different color per task type */
+
+.task-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+}
+
+/* up to 5 colors, reuse if more tasks */
+.task-dot-color-0 {
+  background-color: #2f6b32;
+}
+.task-dot-color-1 {
+  background-color: #3b82f6;
+}
+.task-dot-color-2 {
+  background-color: #f97316;
+}
+.task-dot-color-3 {
+  background-color: #ec4899;
+}
+.task-dot-color-4 {
+  background-color: #10b981;
+}
+
+/* RIGHT PANEL */
+
+.calendar-details {
+  padding: 16px 18px;
+}
+
+.calendar-details-title {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.calendar-task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calendar-task-list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  border-radius: 8px;
+  background-color: #f9fafb;
+}
+
+.calendar-task-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.calendar-task-plant {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.calendar-task-meta {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* MOBILE */
+
+@media screen and (max-width: 900px) {
+  .calendar-layout {
+    grid-template-columns: 1fr;
+  }
+}

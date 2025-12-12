@@ -27,7 +27,7 @@ class PlantsRepository extends Repository {
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Return plants
+        // Return records
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
