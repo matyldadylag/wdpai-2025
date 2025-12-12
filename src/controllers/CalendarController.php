@@ -19,6 +19,7 @@ class CalendarController extends AppController
         $this->taskHistoryRepository  = new TaskHistoryRepository();
     }
 
+    // Builds a monthly schedule of plant care tasks for the logged-in user and renders the calendar view
     public function index()
     {
         // Require user to be logged in
@@ -28,66 +29,82 @@ class CalendarController extends AppController
         $user = $this->getUser();
         $userId = (int)$user['id'];
 
-        // Determine which month to show (current or selected by user)
+        // If month wasn't requested via URL parameter (arrows) fallback to the current date month
         $today = new DateTimeImmutable('today');
         $paramMonth = $_GET['month'] ?? $today->format('Y-m');
 
-        // Limit calendar display to +3 months from current date
+        // Set boundaries - first day of the current month +3 months
         $currentMonth = $today->modify('first day of this month');
         $maxMonth     = $currentMonth->modify('+3 months');
 
+        // Convert requested month string into a DateTime object
         $requestedMonth = DateTimeImmutable::createFromFormat('Y-m-d', $paramMonth . '-01') ?: $currentMonth;
 
+        // Prevent navigating to months earlier than the current month
         if ($requestedMonth < $currentMonth) {
             $requestedMonth = $currentMonth;
         }
+
+        // Prevent navigating beyond the maximum allowed future month
         if ($requestedMonth > $maxMonth) {
             $requestedMonth = $maxMonth;
         }
 
+        // Extract year and month numbers for later use in rendering
         $year  = (int)$requestedMonth->format('Y');
         $month = (int)$requestedMonth->format('m');
 
+        // Create a DateTime object representing the first day of the selected month
         $firstDayOfMonth = new DateTimeImmutable(sprintf('%04d-%02d-01', $year, $month));
+
+        // Determine how many days the selected month contains
         $daysInMonth     = (int)$firstDayOfMonth->format('t');
 
+        // Define the date range for which tasks should be generated
         $fromDate = $firstDayOfMonth;
         $toDate   = $firstDayOfMonth->modify('last day of this month');
 
-        // Retrieve info on plants
+        // Retrieve info on plants for given user
         $plants = $this->plantsRepository->getPlantsForUser($userId);
 
-        // 4. Build schedule: [Y-m-d] => [task entries...]
+        // Build schedule
         $tasksByDate = [];
         $taskColorIndexByTaskId = [];
         $nextColorIndex = 0;
-
+        
+        // Iterate through all user's plants   
         foreach ($plants as $plant) {
             $speciesId   = (int)$plant['species_id'];
             $plantId     = (int)$plant['plant_id'];
+
+            // Use custom plant name if available, otherwise fallback to species name
             $plantName   = $plant['plant_name'] ?: $plant['species_name'];
             $speciesName = $plant['species_name'];
 
+            // Retrieve all tasks defined for the plant's species
             $speciesTasks = $this->tasksRepository->getTasksForSpecies($speciesId);
 
+            // Iterate through each task assigned to this species
             foreach ($speciesTasks as $taskRow) {
                 $taskId        = (int)$taskRow['task_id'];
                 $taskName      = $taskRow['task_name'];
                 $freqDays      = (int)$taskRow['frequency_days'];
 
+                // Ignore tasks without a valid frequency
                 if ($freqDays <= 0) {
                     continue;
                 }
 
-                // Color index per task type
+                // Color per task type
                 if (!isset($taskColorIndexByTaskId[$taskId])) {
                     $taskColorIndexByTaskId[$taskId] = $nextColorIndex++;
                 }
                 $colorIndex = $taskColorIndexByTaskId[$taskId];
 
-                // Last performed
+                // Retrieve the last time this task was performed for this plant
                 $lastPerformedAt = $this->taskHistoryRepository->getLastPerformedAt($plantId, $taskId);
 
+                // Determine the base date for scheduling the next occurrence
                 if ($lastPerformedAt) {
                     $base = new DateTimeImmutable($lastPerformedAt);
                 } else {
@@ -95,7 +112,7 @@ class CalendarController extends AppController
                     $base = $today;
                 }
 
-                // next due date = base + frequency
+                // Calculate the first due date based on frequency
                 $nextDue = $base->modify('+' . $freqDays . ' days');
 
                 // Generate all occurrences that fall into this month’s range
@@ -119,7 +136,7 @@ class CalendarController extends AppController
             }
         }
 
-        // 5. Data for navigation
+        // Determine whether previous / next month navigation is allowed
         $prevMonth = $requestedMonth > $currentMonth
             ? $requestedMonth->modify('-1 month')->format('Y-m')
             : null;
