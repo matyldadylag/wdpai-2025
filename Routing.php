@@ -71,6 +71,10 @@ class Routing {
             'controller' => 'CalendarController',
             'action'     => 'index'
         ],
+        'calendar/mark-task-done' => [
+            'controller' => 'CalendarController',
+            'action'     => 'markTaskDone'
+        ],
     ];
 
     // Main routing method

@@ -166,4 +166,54 @@ class CalendarController extends AppController
             'nextMonth'      => $nextMonth,
         ]);
     }
+
+    // TODO check if FETCH API done correctly + add comments
+    // Insert task into task history when user marks it as done
+    public function markTaskDone()
+    {
+        // Required user to be logged in
+        $this->requireLogin();
+        
+        // If request is not POST return default view
+        if ($this->isGet()) {
+            return $this->render("index");
+        }
+
+        $raw = file_get_contents('php://input');
+        $data = json_decode($raw, true);
+
+        $taskId  = isset($data['task_id']) ? (int)$data['task_id'] : 0;
+        $plantId = isset($data['plant_id']) ? (int)$data['plant_id'] : 0;
+
+        if ($taskId <= 0 || $plantId <= 0) {
+            http_response_code(400);
+            header('Content-Type: application/json');
+            echo json_encode(['ok' => false, 'error' => 'Invalid payload']);
+            return;
+        }
+
+        // Zakładam, że możesz dodać taką metodę albo masz już coś podobnego:
+        $plant = $this->plantsRepository->getSinglePlantForUser($plantId, $userId);
+        if (!$plant) {
+            http_response_code(403);
+            header('Content-Type: application/json');
+            echo json_encode(['ok' => false, 'error' => 'Forbidden']);
+            return;
+        }
+
+        // Insert task into history
+        try {
+            $historyId = $this->taskHistoryRepository->insertPerformedNow($plantId, $taskId);
+
+            header('Content-Type: application/json');
+            echo json_encode([
+                'ok' => true,
+                'task_history_id' => $historyId
+            ]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            header('Content-Type: application/json');
+            echo json_encode(['ok' => false, 'error' => 'Server error']);
+        }
+    }
 }
