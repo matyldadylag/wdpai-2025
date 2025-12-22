@@ -173,6 +173,10 @@ class CalendarController extends AppController
     {
         // Required user to be logged in
         $this->requireLogin();
+
+        // Retrieve user information
+        $user = $this->getUser();
+        $userId = (int)$user['id'];
         
         // If request is not POST return default view
         if ($this->isGet()) {

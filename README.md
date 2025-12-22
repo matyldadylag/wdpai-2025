@@ -23,29 +23,29 @@ Helps you take care of your houseplants!
 
 - [ ] Dokumentacja w README.md
 - [ ] Architektura aplikacji MVC/front-backend, inna
-- [x] Kod napisany obiektowo (część backendowa)
-- [x] Diagram ERD
-- [x] Git
-- [x] Realizacja tematu
-- [x] HTML
-- [x] PostgreSQL
-- [x] Złożoność bazy danych
+- [ ] Kod napisany obiektowo (część backendowa)
+- [ ] Diagram ERD
+- [ ] Git
+- [ ] Realizacja tematu
+- [ ] HTML
+- [ ] PostgreSQL
+- [ ] Złożoność bazy danych
 - [ ] Eksport bazy do pliku .sql
-- [x] PHP
-- [x] Java Script
+- [ ] PHP
+- [ ] Java Script
 - [ ] Fetch API (Ajax)
-- [x] Design
+- [ ] Design
 - [ ] Responsywność
-- [x] Logowanie
+- [ ] Logowanie
 - [ ] Sesja użytkownika
 - [ ] Uprawnienia użytkowników
-- [x] Role użytkowników - co najmniej dwie
+- [ ] Role użytkowników - co najmniej dwie
 - [ ] Wylogowywanie
 - [ ] Widoki, wyzwalacze, funkcje, transakcje
-- [x] Akcje na referencjach (joiny w bazie danych)
+- [ ] Akcje na referencjach (joiny w bazie danych)
 - [ ] Bezpieczeństwo
 - [ ] Brak replikacji kodu
-- [x] Czystość i przejrzystość kodu
+- [ ] Czystość i przejrzystość kodu
 
 ## ERD
 
