@@ -1,0 +1,72 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.dashboard-card-title {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* birthdays */
+.dashboard-card-wide {
+  grid-column: 1 / -1;
+}
+
+.dashboard-birthday-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-birthday-item {
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dashboard-birthday-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dashboard-birthday-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dashboard-birthday-meta {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.dashboard-birthday-date {
+  font-size: 12px;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+/* mobile */
+@media screen and (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-card-wide {
+    grid-column: auto;
+  }
+}

@@ -108,8 +108,10 @@ class CalendarController extends AppController
                 if ($lastPerformedAt) {
                     $base = new DateTimeImmutable($lastPerformedAt);
                 } else {
-                    // If never done, start from "today"
-                    $base = $today;
+                    // If never done, start from day plant was added
+                    $base = !empty($plant['date_added'])
+                    ? new DateTimeImmutable($plant['date_added'])
+                    : $today;
                 }
 
                 // Calculate the first due date based on frequency
@@ -167,7 +169,7 @@ class CalendarController extends AppController
         ]);
     }
 
-    // TODO check if FETCH API done correctly + add comments
+    // TODO Add comments
     // Insert task into task history when user marks it as done
     public function markTaskDone()
     {

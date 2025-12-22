@@ -1,3 +1,4 @@
+// TODO Add comments
 document.addEventListener("DOMContentLoaded", () => {
   const cells = document.querySelectorAll(".calendar-cell[data-date]");
   const detailsDateLabel = document.getElementById("detailsDateLabel");

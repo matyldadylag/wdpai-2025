@@ -51,10 +51,6 @@ class Routing {
             'controller' => 'MyPlantsController',
             'action' => 'index'
         ],
-        'calendar' => [
-            'controller' => 'CalendarController',
-            'action' => 'index'
-        ],
         'my-plants/create' => [
             'controller' => 'MyPlantsController',
             'action' => 'create'
@@ -69,7 +65,7 @@ class Routing {
         ],
         'calendar' => [
             'controller' => 'CalendarController',
-            'action'     => 'index'
+            'action' => 'index'
         ],
         'calendar/mark-task-done' => [
             'controller' => 'CalendarController',

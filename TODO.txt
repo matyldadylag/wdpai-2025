@@ -1,0 +1,3 @@
+[ ] Admin role
+[ ] Regroup all common CSS styles into main.css. Clean up all styles files
+[ ] Check all .js files, add comments

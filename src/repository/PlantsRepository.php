@@ -125,4 +125,29 @@ class PlantsRepository extends Repository {
         $stmt->execute();
     }
 
+    // TODO Add comments
+    public function getBirthdayPlantsForUser(int $userId, DateTimeImmutable $today): array
+    {
+        $conn = $this->database->connect();
+
+        $stmt = $conn->prepare('
+            SELECT 
+                p.plant_id,
+                p.plant_name,
+                p.date_added,
+                s.species_name
+            FROM plants p
+            LEFT JOIN species s ON p.species_id = s.species_id
+            WHERE p.user_id = :user_id
+            AND to_char(p.date_added::date, \'MM-DD\') = :mmdd
+            ORDER BY p.plant_id ASC
+        ');
+
+        $mmdd = $today->format('m-d'); // "12-22"
+        $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindValue(':mmdd', $mmdd, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

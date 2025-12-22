@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planta – Dashboard</title>
+    <link rel="icon" href="/public/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/public/styles/main.css" />
+    <link rel="stylesheet" type="text/css" href="/public/styles/calendar.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/public/styles/my-plants.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/public/styles/dashboard.css"
+    />
+  </head>
+  <body>
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="logo-mark"></div>
+        <span class="logo-text">Planta</span>
+      </div>
+
+      <nav class="nav-right">
+        <a href="/dashboard" class="nav-link-active">Dashboard</a>
+        <a href="/my-plants">My Plants</a>
+        <a href="/calendar">Calendar</a>
+        <a href="/logout" class="nav-signup">Log out</a>
+      </nav>
+    </header>
+
+    <main class="my-plants-layout">
+      <section class="my-plants-header">
+        <div>
+          <h1 class="my-plants-title">Dashboard</h1>
+          <p class="my-plants-subtitle">
+            Quick overview for
+            <?= htmlspecialchars($todayKey) ?>.
+          </p>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <!-- TODAY -->
+        <div class="card">
+          <h2 class="dashboard-card-title">Tasks for today</h2>
+
+          <div id="todayTasks">
+            <?php if (empty($todayTasks)): ?>
+            <p class="empty-state">No tasks scheduled for today.</p>
+            <?php else: ?>
+            <ul class="calendar-task-list">
+              <?php foreach ($todayTasks as $task): ?>
+              <li
+                class="calendar-task-list-item"
+                data-plant-id="<?= (int)$task['plant_id'] ?>"
+                data-task-id="<?= (int)$task['task_id'] ?>"
+              >
+                <span
+                  class="task-dot task-dot-color-<?= (int)$task['color_index'] ?>"
+                ></span>
+
+                <div class="calendar-task-main">
+                  <span class="calendar-task-plant"
+                    ><?= htmlspecialchars($task['plant_name']) ?></span
+                  >
+                  <span class="calendar-task-meta">
+                    <?= htmlspecialchars($task['task_name']) ?>
+                    •
+                    <?= htmlspecialchars($task['species_name']) ?>
+                  </span>
+                </div>
+
+                <label class="task-done">
+                  <input type="checkbox" class="task-done-checkbox" />
+                  <span>Done</span>
+                </label>
+              </li>
+              <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+          </div>
+        </div>
+
+        <!-- OVERDUE -->
+        <div class="card">
+          <h2 class="dashboard-card-title">Overdue tasks</h2>
+
+          <div id="overdueTasks">
+            <?php if (empty($overdueTasks)): ?>
+            <p class="empty-state">No overdue tasks.</p>
+            <?php else: ?>
+            <ul class="calendar-task-list">
+              <?php foreach ($overdueTasks as $task): ?>
+              <li
+                class="calendar-task-list-item"
+                data-plant-id="<?= (int)$task['plant_id'] ?>"
+                data-task-id="<?= (int)$task['task_id'] ?>"
+              >
+                <span
+                  class="task-dot task-dot-color-<?= (int)$task['color_index'] ?>"
+                ></span>
+
+                <div class="calendar-task-main">
+                  <span class="calendar-task-plant"
+                    ><?= htmlspecialchars($task['plant_name']) ?></span
+                  >
+                  <span class="calendar-task-meta">
+                    <?= htmlspecialchars($task['task_name']) ?>
+                    •
+                    <?= htmlspecialchars($task['species_name']) ?>
+                    • Due
+                    <?= htmlspecialchars($task['due_date']) ?>
+                  </span>
+                </div>
+
+                <label class="task-done">
+                  <input type="checkbox" class="task-done-checkbox" />
+                  <span>Done</span>
+                </label>
+              </li>
+              <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+          </div>
+        </div>
+
+        <!-- BIRTHDAYS -->
+        <div class="card dashboard-card-wide">
+          <h2 class="dashboard-card-title">Plant birthdays</h2>
+
+          <?php if (empty($birthdays)): ?>
+          <p class="empty-state">No plant birthdays today.</p>
+          <?php else: ?>
+          <ul class="dashboard-birthday-list">
+            <?php foreach ($birthdays as $plant): ?>
+            <?php
+                  $name = $plant['plant_name'] ?: ($plant['species_name'] ?? 'Plant');
+                  $added = !empty($plant['date_added']) ? date('Y-m-d', strtotime($plant['date_added'])) : '';
+                ?>
+            <li class="dashboard-birthday-item">
+              <div class="dashboard-birthday-main">
+                <span class="dashboard-birthday-name"
+                  ><?= htmlspecialchars($name) ?></span
+                >
+                <?php if (!empty($plant['species_name'])): ?>
+                <span class="dashboard-birthday-meta"
+                  ><?= htmlspecialchars($plant['species_name']) ?></span
+                >
+                <?php endif; ?>
+              </div>
+              <?php if ($added): ?>
+              <span class="dashboard-birthday-date"
+                >Added on
+                <?= htmlspecialchars($added) ?></span
+              >
+              <?php endif; ?>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+          <?php endif; ?>
+        </div>
+      </section>
+    </main>
+
+    <script src="/public/scripts/dashboard.js"></script>
+  </body>
+</html>
