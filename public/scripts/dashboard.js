@@ -1,4 +1,3 @@
-// TODO Add comments
 document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("change", async (e) => {
     const cb = e.target;

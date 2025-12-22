@@ -1,4 +1,3 @@
-// TODO Add comments
 document.addEventListener("DOMContentLoaded", function () {
   // Add plant modal
   const openBtn = document.getElementById("openAddPlant");
