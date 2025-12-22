@@ -77,12 +77,7 @@ class PlantsRepository extends Repository {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updatePlant(
-        int $plantId,
-        int $userId,
-        int $speciesId,
-        string $plantName,
-    ): void {
+    public function updatePlant(int $plantId, int $userId, int $speciesId, string $plantName, ): void {
         // Connect to the database
         $conn = $this->database->connect();
 
@@ -125,11 +120,13 @@ class PlantsRepository extends Repository {
         $stmt->execute();
     }
 
-    // TODO Add comments
+    // Get all plants with date_added birthday today
     public function getBirthdayPlantsForUser(int $userId, DateTimeImmutable $today): array
     {
+        // Connect to the database
         $conn = $this->database->connect();
 
+        // Prepare SQL query
         $stmt = $conn->prepare('
             SELECT 
                 p.plant_id,
@@ -143,11 +140,13 @@ class PlantsRepository extends Repository {
             ORDER BY p.plant_id ASC
         ');
 
-        $mmdd = $today->format('m-d'); // "12-22"
+        // Bind parameters and execute query
+        $mmdd = $today->format('m-d');
         $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
         $stmt->bindValue(':mmdd', $mmdd, PDO::PARAM_STR);
         $stmt->execute();
 
+        // Return all records
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
