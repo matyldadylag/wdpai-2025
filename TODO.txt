@@ -1,3 +1,0 @@
-- Admin panel for viewing and deleting users.
-- Clean up all .css files. Regroup all common styles into main.css (fix includes in .html files).
-- Check all .js files, add comments.

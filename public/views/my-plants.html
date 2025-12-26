@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="public/styles/my-plants.css" />
   </head>
   <body>
-    <!-- TOP NAVBAR -->
     <header class="top-nav">
       <div class="nav-left">
         <div class="logo-mark"></div>
@@ -36,7 +35,6 @@
           </p>
         </div>
 
-        <!-- "ADD" BUTTON -->
         <button type="button" class="btn-primary" id="openAddPlant">
           Add plant
         </button>
@@ -78,7 +76,6 @@
             </div>
 
             <div class="plant-list-actions">
-              <!-- EDIT (opens modal) -->
               <button
                 type="button"
                 class="btn-ghost edit-plant-btn"
@@ -89,7 +86,6 @@
                 Edit
               </button>
 
-              <!-- DELETE (normal POST) -->
               <form
                 method="post"
                 action="/my-plants/delete"
@@ -109,7 +105,6 @@
         <?php endif; ?>
       </section>
 
-      <!-- ADD PLANT MODAL -->
       <div id="addPlantModal" class="modal-backdrop hidden">
         <div class="modal">
           <div class="modal-header">
@@ -151,7 +146,6 @@
         </div>
       </div>
 
-      <!-- EDIT PLANT MODAL -->
       <div id="editPlantModal" class="modal-backdrop hidden">
         <div class="modal">
           <div class="modal-header">
