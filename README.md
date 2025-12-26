@@ -38,6 +38,13 @@ Struktura aplikacji jest podzielona na warstwy:
 
 ### Design
 
+<img src="public/images/login.png" alt="" width="300"/>
+<img src="public/images/register.png" alt="" width="300"/>
+<img src="public/images/dashboard.png" alt="" width="300"/>
+<img src="public/images/my-plants.png" alt="" width="300"/>
+<img src="public/images/calendar.png" alt="" width="300"/>
+<img src="public/images/admin-users.png" alt="" width="300"/>
+
 ### Responsywność
 
 ### Logowanie
