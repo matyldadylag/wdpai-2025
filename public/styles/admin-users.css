@@ -1,0 +1,57 @@
+.admin-card-title {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.admin-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 10px 10px;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
+}
+
+.admin-actions-col {
+  width: 140px;
+  text-align: right;
+}
+
+.admin-role {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  font-size: 12px;
+}
+
+.admin-delete-form {
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-delete-btn {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #ef4444;
+  background: #fff1f2;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.admin-delete-btn:hover {
+  background: #ffe4e6;
+}

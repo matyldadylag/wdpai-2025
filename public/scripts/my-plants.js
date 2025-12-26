@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Add plant modal
   const openBtn = document.getElementById("openAddPlant");
   const modal = document.getElementById("addPlantModal");
   const cancelBtn = document.getElementById("cancelAddPlant");
@@ -23,21 +22,18 @@ document.addEventListener("DOMContentLoaded", function () {
   openBtn.addEventListener("click", openModal);
   cancelBtn.addEventListener("click", closeModal);
 
-  // Close when clicking outside the dialog content
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
       closeModal();
     }
   });
 
-  // Close on ESC
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !modal.classList.contains("hidden")) {
       closeModal();
     }
   });
 
-  // Edit plant modal
   const editModal = document.getElementById("editPlantModal");
   const editCancel = document.getElementById("cancelEditPlant");
 
@@ -49,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (editModal && editCancel && editButtons.length > 0) {
     const openEditModal = (btn) => {
-      // Populate form fields from data attributes
       editPlantId.value = btn.dataset.plantId;
       editPlantName.value = btn.dataset.plantName || "";
 
@@ -57,10 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
         editSpecies.value = btn.dataset.speciesId;
       }
 
-      // Show modal
       editModal.classList.remove("hidden");
 
-      // Autofocus first input
       if (editPlantName) editPlantName.focus();
     };
 
@@ -68,20 +61,16 @@ document.addEventListener("DOMContentLoaded", function () {
       editModal.classList.add("hidden");
     };
 
-    // Open modal on clicking "Edit"
     editButtons.forEach((btn) => {
       btn.addEventListener("click", () => openEditModal(btn));
     });
 
-    // Close on cancel button
     editCancel.addEventListener("click", closeEditModal);
 
-    // Close when clicking backdrop
     editModal.addEventListener("click", (e) => {
       if (e.target === editModal) closeEditModal();
     });
 
-    // Close on ESC key
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && !editModal.classList.contains("hidden")) {
         closeEditModal();

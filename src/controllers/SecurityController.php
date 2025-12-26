@@ -47,6 +47,7 @@ class SecurityController extends AppController {
             'id'    => $user['user_id'] ?? null,
             'name'  => $user['user_name'] ?? null,
             'email' => $user['email'] ?? null,
+            'role'  => $user['role'] ?? null,
         ];
 
         // Redirect to dashboard (no re-submission on refresh)

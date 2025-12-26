@@ -39,4 +39,37 @@ class UserRepository extends Repository
 
         return $user;
     }
+
+    // Get all users for admin panel
+    public function getAllUsers(): array
+    {
+        // Connect to the database and prepare SQL query
+        $stmt = $this->database->connect()->prepare("
+            SELECT
+                u.user_id,
+                u.user_name,
+                u.email,
+                u.role
+            FROM users u
+            ORDER BY u.user_id ASC
+        ");
+
+        // Execute query and return fetched records
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    }
+
+    // Delete user by id
+    public function deleteUserById(int $userId): bool
+    {
+        // Connect to the database and prepare SQL query
+        $stmt = $this->database->connect()->prepare("
+            DELETE FROM users
+            WHERE user_id = :id
+        ");
+
+        // Bind parameters and execute
+        $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }

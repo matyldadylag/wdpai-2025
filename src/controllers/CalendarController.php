@@ -158,6 +158,7 @@ class CalendarController extends AppController
 
         // Render view
         $this->render('calendar', [
+            'user'           => $user,
             'year'           => $year,
             'month'          => $month,
             'firstDayOfMonth'=> $firstDayOfMonth,

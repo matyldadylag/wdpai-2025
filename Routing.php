@@ -3,6 +3,7 @@ require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/DashboardController.php';
 require_once 'src/controllers/MyPlantsController.php';
 require_once 'src/controllers/CalendarController.php';
+require_once 'src/controllers/AdminUsersController.php';
 
 class Routing {
     // Singleton instance of the Routing class
@@ -70,6 +71,14 @@ class Routing {
         'calendar/mark-task-done' => [
             'controller' => 'CalendarController',
             'action'     => 'markTaskDone'
+        ],
+        'admin/users' => [
+            'controller' => 'AdminUsersController',
+            'action'     => 'index'
+        ],
+        'admin/users/delete' => [
+            'controller' => 'AdminUsersController',
+            'action'     => 'delete'
         ],
     ];
 

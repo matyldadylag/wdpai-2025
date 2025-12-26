@@ -40,6 +40,22 @@ class AppController {
         }
     }
 
+    // Require admin role for admin-only pages
+    protected function requireAdmin(): void
+    {
+        // Require login
+        $this->requireLogin();
+
+        // Get user information
+        $user = $this->getUser();
+        $role = $user['role'] ?? null;
+
+        // If not admin redirect to dashboard
+        if ($role !== 'admin') {
+            $this->redirect('dashboard');
+        }
+    }
+
     // Render a given HTML template and pass variables to it
     protected function render(string $template = null, array $variables = [])
     {

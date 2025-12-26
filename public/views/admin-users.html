@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planta – Admin Users</title>
+    <link rel="icon" href="/public/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/public/styles/main.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/public/styles/my-plants.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/public/styles/admin-users.css"
+    />
+  </head>
+  <body>
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="logo-mark"></div>
+        <span class="logo-text">Planta</span>
+      </div>
+
+      <nav class="nav-right">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/my-plants">My Plants</a>
+        <a href="/calendar">Calendar</a>
+
+        <?php if (!empty($user) && ($user['role'] ?? null) === 'admin'): ?>
+        <a href="/admin/users" class="nav-link-active">Admin</a>
+        <?php endif; ?>
+
+        <a href="/logout" class="nav-signup">Log out</a>
+      </nav>
+    </header>
+
+    <main class="my-plants-layout">
+      <section class="my-plants-header">
+        <div>
+          <h1 class="my-plants-title">Admin – Users</h1>
+          <p class="my-plants-subtitle">Manage application users.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="admin-card-title">All users</h2>
+
+        <?php if (empty($users)): ?>
+        <p class="empty-state">No users found.</p>
+        <?php else: ?>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th class="admin-actions-col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($users as $row): ?>
+              <?php
+                    $id = (int)($row['user_id'] ?? 0);
+                    $name = $row['user_name'] ?? '';
+                    $email = $row['email'] ?? '';
+                    $role = $row['role'] ?? '';
+                  ?>
+              <tr>
+                <td><?= $id ?></td>
+                <td><?= htmlspecialchars($name) ?></td>
+                <td><?= htmlspecialchars($email) ?></td>
+                <td>
+                  <span class="admin-role"><?= htmlspecialchars($role) ?></span>
+                </td>
+                <td class="admin-actions-col">
+                  <form
+                    method="POST"
+                    action="/admin/users/delete"
+                    class="admin-delete-form"
+                  >
+                    <input type="hidden" name="user_id" value="<?= $id ?>" />
+                    <button type="submit" class="admin-delete-btn">
+                      Delete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+        <?php endif; ?>
+      </section>
+    </main>
+
+    <script src="/public/scripts/admin-users.js"></script>
+  </body>
+</html>

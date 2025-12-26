@@ -29,6 +29,9 @@
         <a href="/dashboard" class="nav-link-active">Dashboard</a>
         <a href="/my-plants">My Plants</a>
         <a href="/calendar">Calendar</a>
+        <?php if (!empty($user) && ($user['role'] ?? null) === 'admin'): ?>
+        <a href="/admin/users">Admin</a>
+        <?php endif; ?>
         <a href="/logout" class="nav-signup">Log out</a>
       </nav>
     </header>
