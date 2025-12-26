@@ -1,11 +1,15 @@
+// Run script after the page is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
-  document.body.addEventListener("submit", (e) => {
-    const form = e.target;
-    if (!form.classList || !form.classList.contains("admin-delete-form")) return;
+    // Listen for all form submissions using event delegation
+    document.body.addEventListener("submit", (e) => {
+        const form = e.target;
 
-    const ok = window.confirm("Are you sure you want to delete this user?");
-    if (!ok) {
-      e.preventDefault();
-    }
-  });
+        // Ask for confirmation before deleting a user
+        const ok = window.confirm("Are you sure you want to delete this user?");
+
+        // Cancel form submission if admin clicks "Cancel"
+        if (!ok) {
+            e.preventDefault();
+        }
+    });
 });
