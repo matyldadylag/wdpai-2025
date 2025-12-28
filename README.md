@@ -34,7 +34,36 @@ Struktura aplikacji jest podzielona na warstwy:
 
 [Link do repozytorium GitHub](https://github.com/matyldadylag/wdpai-2025).
 
-### Fetch API (Ajax)
+### Fetch API (AJAX)
+
+W [calendar.js](public/scripts/calendar.js):
+
+Użyty jest Fetch API, który wysyła żądanie POST z danymi w postacji JSON.
+
+```
+const res = await fetch("/calendar/mark-task-done", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "X-Requested-With": "fetch",
+    },
+    body: JSON.stringify({ plant_id: plantId, task_id: taskId }),
+});
+```
+
+W dalszej części kodu odpowiedź z serwera jest odbierana, parsowana jako JSON, sprawdzany jest status operacji (data.ok), interfejs użytkownika jest aktualizowany.
+
+```
+const data = await res.json().catch(() => null);
+
+if (!res.ok || !data || !data.ok) {
+    throw new Error((data && data.error) || "Request failed");
+}
+
+item.classList.add("calendar-task-done");
+cb.checked = true;
+window.location.reload();
+```
 
 ### Design
 
@@ -47,19 +76,16 @@ Struktura aplikacji jest podzielona na warstwy:
 
 ### Responsywność
 
-### Logowanie
-
-### Sesja użytkownika
-
-### Uprawnienia użytkowników
+<img src="public/images/login-mobile.png" alt="" width="100"/>
+<img src="public/images/register-mobile.png" alt="" width="100"/>
+<img src="public/images/dashboard-mobile.png" alt="" width="100"/>
+<img src="public/images/my-plants-mobile.png" alt="" width="100"/>
+<img src="public/images/calendar-mobile.png" alt="" width="100"/>
+<img src="public/images/admin-users-mobile.png" alt="" width="100"/>
 
 ### Wylogowywanie
 
 ### Widoki, wyzwalacze, funkcje, transakcje
-
-### Akcje na referencjach
-
-joiny w bazie danych
 
 ### Bezpieczeństwo
 

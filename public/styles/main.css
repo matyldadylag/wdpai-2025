@@ -11,13 +11,39 @@ body {
 /* TOP NAVBAR (SHARED) */
 
 .top-nav {
-  height: 72px;
+  min-height: 72px; 
   padding: 0 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #e5e7eb;
   box-sizing: border-box;
+  position: relative; 
+}
+
+/* Hamburger button hidden on desktop */
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  cursor: pointer;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #111827;
+  border-radius: 2px;
 }
 
 .nav-left {
@@ -80,6 +106,53 @@ body {
 
 @media screen and (max-width: 768px) {
   .top-nav {
-    padding: 0 24px;
+    padding: 12px 16px;
+  }
+
+    .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Turn the desktop row into a dropdown panel */
+  .nav-right {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: calc(100% + 10px);
+
+    display: none;               /* hidden by default */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+  }
+
+  .nav-right a {
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .nav-right a:hover {
+    text-decoration: none;
+    background: #f3f4f6;
+  }
+
+  /* keep the button-looking logout link full width */
+  .nav-right .nav-signup {
+    text-align: center;
+    display: block;
+  }
+
+  /* When menu is open */
+  .top-nav.nav-open .nav-right {
+    display: flex;
   }
 }

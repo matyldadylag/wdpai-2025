@@ -47,11 +47,17 @@
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  gap: 4px; /* match .calendar-grid gap */
   margin-bottom: 4px;
+
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: #6b7280;
+}
+
+.calendar-weekdays > div {
+  min-width: 0; /* prevents overflow from forcing column width */
 }
 
 /* GRID */
@@ -64,8 +70,13 @@
 }
 
 .calendar-cell {
-  min-height: 52px;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* ✅ makes every cell equal */
+  min-width: 0;        /* ✅ prevents content stretching columns */
+
   padding: 6px 6px 8px;
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -105,6 +116,7 @@
 .calendar-day-number {
   font-size: 12px;
   font-weight: 600;
+  line-height: 1;
 }
 
 .calendar-dots {
@@ -112,6 +124,7 @@
   align-items: center;
   gap: 3px;
   margin-top: 4px;
+  flex-wrap: wrap;
 }
 
 /* TASK DOTS */
@@ -159,11 +172,14 @@
 
   border-radius: 8px;
   background-color: #f9fafb;
+
+  overflow: hidden; /* ✅ prevents any child from visually escaping */
 }
 
 .calendar-task-main {
-  flex: 1;
-  min-width: 0;
+  flex: 1 1 auto; /* ✅ allow shrinking */
+  min-width: 0;   /* ✅ critical for flex overflow issues */
+
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -172,19 +188,21 @@
 .calendar-task-plant {
   font-size: 14px;
   font-weight: 500;
+
+  display: block;            /* ✅ needed for ellipsis */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;       /* single-line with ellipsis */
 }
 
 .calendar-task-meta {
   font-size: 12px;
   color: #6b7280;
-}
 
-/* Ellipsis for long text */
-.calendar-task-plant,
-.calendar-task-meta {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: block;
+  white-space: normal;       /* ✅ wraps instead of overflowing */
+  overflow-wrap: anywhere;   /* ✅ break long chunks */
+  word-break: break-word;
 }
 
 /* DONE (checkbox group) */
