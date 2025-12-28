@@ -1,4 +1,6 @@
+// Run script after the page is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
+  // Find needed elements
   const header = document.querySelector(".top-nav");
   const toggleBtn = document.querySelector(".nav-toggle");
   const nav = document.querySelector(".nav-right");
