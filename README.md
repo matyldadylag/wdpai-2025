@@ -80,8 +80,6 @@ window.location.reload();
 <img src="public/images/login-mobile.png" alt="" width="300"/>
 <img src="public/images/register-mobile.png" alt="" width="300"/>
 <img src="public/images/dashboard-mobile.png" alt="" width="300"/>
-</div>
-<div>
 <img src="public/images/my-plants-mobile.png" alt="" width="300"/>
 <img src="public/images/calendar-mobile.png" alt="" width="300"/>
 <img src="public/images/admin-users-mobile.png" alt="" width="300"/>
