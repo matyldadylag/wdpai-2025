@@ -18,6 +18,28 @@ class SecurityController extends AppController {
             return $this->render("login");
         }
 
+        // Initialize login attempts data
+        if (!isset($_SESSION['login_attempts'])) {
+            $_SESSION['login_attempts'] = [
+                'count' => 0,
+                'last_attempt' => null
+            ];
+        }
+
+        // Check if too many attempts
+        $maxAttempts = 5;
+        $blockTime = 30; // seconds
+
+        if (
+            $_SESSION['login_attempts']['count'] >= $maxAttempts &&
+            time() - $_SESSION['login_attempts']['last_attempt'] < $blockTime
+        ) {
+            sleep($blockTime);
+            return $this->render("login", [
+                "messages" => ["Too many login attempts. Please try again later."]
+            ]);
+        }
+
         // Get data sent from the login form
         $email = $_POST["email"] ?? '';
         $password = $_POST["password"] ?? '';
@@ -34,10 +56,19 @@ class SecurityController extends AppController {
 
         // Show error if the user does not exist or the password is incorrect
         if (!$user || !password_verify($password, $user["password"])) {
+            $_SESSION['login_attempts']['count']++;
+            $_SESSION['login_attempts']['last_attempt'] = time();
+
             return $this->render("login", [
                 "messages" => ["Invalid credentials"]
             ]);
         }
+
+        // Reset login attempts after successful login
+        $_SESSION['login_attempts'] = [
+            'count' => 0,
+            'last_attempt' => null
+        ];
 
         // New session identificator
         session_regenerate_id(true);
@@ -118,14 +149,30 @@ class SecurityController extends AppController {
 
     public function logout()
     {
-        // Clear session data
-        $_SESSION = [];
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            session_destroy();
+        // Start session if not started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
 
-        // Start a fresh session to avoid errors on pages expecting $_SESSION
-        session_start();
+        // Unset all session variables
+        session_unset();
+
+        // Destroy the session
+        session_destroy();
+
+        // Delete session cookie (important for full logout)
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
 
         $this->redirect('login');
     }

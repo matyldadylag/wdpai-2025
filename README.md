@@ -87,6 +87,38 @@ window.location.reload();
 
 ### Wylogowywanie
 
+```
+public function logout()
+{
+    // Start session if not started
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Unset all session variables
+    session_unset();
+
+    // Destroy the session
+    session_destroy();
+
+    // Delete session cookie (important for full logout)
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
+        );
+    }
+
+    $this->redirect('login');
+}
+```
+
 ### Widoki, wyzwalacze, funkcje, transakcje
 
 ### Bezpieczeństwo
@@ -100,29 +132,9 @@ window.location.reload();
 7. Waliduję złożoność hasła (min. długość itd.)
 8. Przy rejestracji sprawdzam, czy email jest już w bazie
 9. Z bazy pobieram tylko minimalny zestaw danych o użytkowniku
-10. TODO
-11. TODO
-12. TODO
-13. TODO
-14. TODO
-15. TODO
-
-- Dane wyświetlane w widokach są escapowane (ochrona przed XSS)
-- W produkcji nie pokazuję stack trace / surowych błędów użytkownikowi
-- Zwracam sensowne kody HTTP (np. 400/401/403 przy błędach)
-- Hasło nie jest przekazywane do widoków ani echo/var_dump
-
-- Mam poprawne wylogowanie – niszczę sesję użytkownika
-- Loguję nieudane próby logowania (bez haseł) do audytu
-
-- Po poprawnym logowaniu regeneruję ID sesji
-- Cookie sesyjne ma flagę HttpOnly
-- Cookie sesyjne ma flagę Secure
-- Cookie ma ustawione SameSite (np. Lax/Strict)
-- Limit prób logowania / blokada czasowa / CAPTCHA po wielu nieudanych próbach
-
-- Logowanie i rejestracja dostępne tylko przez HTTPS
-- Metoda login/register przyjmuje dane tylko na POST, GET tylko renderuje widok
-- CSRF token w formularzu logowania
-- CSRF token w formularzu rejestracji
-- Ograniczam długość wejścia (email, hasło, imię…)
+10. Hasło nie jest przekazywane do widoków ani echo/var_dump
+11. Metoda login/register przyjmuje dane tylko na POST, GET tylko renderuje widok
+12. Zwracam sensowne kody HTTP (np. 400/401/403 przy błędach)
+13. Po poprawnym logowaniu regeneruję ID sesji
+14. Mam poprawne wylogowanie – niszczę sesję użytkownika
+15. Limit prób logowania / blokada czasowa / CAPTCHA po wielu nieudanych próbach

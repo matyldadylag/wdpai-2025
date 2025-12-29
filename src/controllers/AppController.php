@@ -36,23 +36,27 @@ class AppController {
     protected function requireLogin(): void
     {
         if (!$this->isAuthenticated()) {
-            $this->redirect('login');
+            http_response_code(401);
+            $this->render('401');
+            exit();
         }
     }
 
     // Require admin role for admin-only pages
     protected function requireAdmin(): void
     {
-        // Require login
-        $this->requireLogin();
+        // Require login, if not render error page
+        if (!$this->isAuthenticated()) {
+            http_response_code(401);
+            $this->render('401');
+            exit();
+        }
 
-        // Get user information
-        $user = $this->getUser();
-        $role = $user['role'] ?? null;
-
-        // If not admin redirect to dashboard
-        if ($role !== 'admin') {
-            $this->redirect('dashboard');
+        // Require admin, if not render error page
+        if (($this->getUser()['role'] ?? null) !== 'admin') {
+            http_response_code(403);
+            $this->render('403');
+            exit();
         }
     }
 
