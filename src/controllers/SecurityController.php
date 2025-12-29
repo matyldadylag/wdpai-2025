@@ -4,11 +4,11 @@ require_once 'AppController.php';
 require_once __DIR__.'/../repository/UserRepository.php';
 
 class SecurityController extends AppController {
-    private $userRepository;
+    private UserRepository $userRepository;
 
     // Create new repository instance
     public function __construct() {
-        $this->userRepository = new UserRepository();
+        $this->userRepository = UserRepository::getInstance();
     }
 
     public function login()
@@ -74,6 +74,13 @@ class SecurityController extends AppController {
             ]);
         }
 
+        // E-mail format validation
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $this->render("register", [
+                "messages" => ["Please enter a valid email address"]
+            ]);
+        }
+
         // Check if passwords match
         if ($password1 !== $password2) {
             return $this->render("register", [
@@ -81,10 +88,11 @@ class SecurityController extends AppController {
             ]);
         }
 
-        // Password length check
-        if (strlen($password1) < 8) {
+        // Password constraints check
+        $pattern = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])\S{8,}$/';
+        if (!preg_match($pattern, $password1)) {
             return $this->render("register", [
-                "messages" => ["Password must be at least 8 characters long"]
+                "messages" => ["Registration failed. Password must be 8+ chars, include upper/lowercase, number, special char, and no spaces"]
             ]);
         }
 
@@ -92,7 +100,7 @@ class SecurityController extends AppController {
         $existingUser = $this->userRepository->getUserByEmail($email);
         if ($existingUser) {
             return $this->render("register", [
-                "messages" => ["User with this email already exists"]
+                "messages" => ["Registration failed. Password must be 8+ chars, include upper/lowercase, number, special char, and no spaces"]
             ]);
         }
 

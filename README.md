@@ -91,30 +91,38 @@ window.location.reload();
 
 ### Bezpieczeństwo
 
-15 z tych:
+1. Ochrona przed SQL injection (prepared statements / brak konkatenacji SQL)
+2. Nie zdradzam, czy email istnieje – komunikat typu „Email lub hasło niepoprawne”
+3. Walidacja formatu email po stronie serwera
+4. UserRepository zarządzany jako singleton
+5. Hasła przechowywane jako hash (bcrypt/Argon2, password_hash)
+6. Hasła nigdy nie są logowane w logach / errorach
+7. Waliduję złożoność hasła (min. długość itd.)
+8. Przy rejestracji sprawdzam, czy email jest już w bazie
+9. Z bazy pobieram tylko minimalny zestaw danych o użytkowniku
+10. TODO
+11. TODO
+12. TODO
+13. TODO
+14. TODO
+15. TODO
 
-- Ochrona przed SQL injection (prepared statements / brak konkatenacji SQL)
-- Nie zdradzam, czy email istnieje – komunikat typu „Email lub hasło niepoprawne”
-- Walidacja formatu email po stronie serwera
-- UserRepository zarządzany jako singleton
-- Logowanie i rejestracja dostępne tylko przez HTTPS
-- Metoda login/register przyjmuje dane tylko na POST, GET tylko renderuje widok
-- CSRF token w formularzu logowania
-- CSRF token w formularzu rejestracji
-- Ograniczam długość wejścia (email, hasło, imię…)
-- Hasła przechowywane jako hash (bcrypt/Argon2, password_hash)
-- Hasła nigdy nie są logowane w logach / errorach
+- Dane wyświetlane w widokach są escapowane (ochrona przed XSS)
+- W produkcji nie pokazuję stack trace / surowych błędów użytkownikowi
+- Zwracam sensowne kody HTTP (np. 400/401/403 przy błędach)
+- Hasło nie jest przekazywane do widoków ani echo/var_dump
+
+- Mam poprawne wylogowanie – niszczę sesję użytkownika
+- Loguję nieudane próby logowania (bez haseł) do audytu
+
 - Po poprawnym logowaniu regeneruję ID sesji
 - Cookie sesyjne ma flagę HttpOnly
 - Cookie sesyjne ma flagę Secure
 - Cookie ma ustawione SameSite (np. Lax/Strict)
 - Limit prób logowania / blokada czasowa / CAPTCHA po wielu nieudanych próbach
-- Waliduję złożoność hasła (min. długość itd.)
-- Przy rejestracji sprawdzam, czy email jest już w bazie
-- Dane wyświetlane w widokach są escapowane (ochrona przed XSS)
-- W produkcji nie pokazuję stack trace / surowych błędów użytkownikowi
-- Zwracam sensowne kody HTTP (np. 400/401/403 przy błędach)
-- Hasło nie jest przekazywane do widoków ani echo/var_dump
-- Z bazy pobieram tylko minimalny zestaw danych o użytkowniku
-- Mam poprawne wylogowanie – niszczę sesję użytkownika
-- Loguję nieudane próby logowania (bez haseł) do audytu
+
+- Logowanie i rejestracja dostępne tylko przez HTTPS
+- Metoda login/register przyjmuje dane tylko na POST, GET tylko renderuje widok
+- CSRF token w formularzu logowania
+- CSRF token w formularzu rejestracji
+- Ograniczam długość wejścia (email, hasło, imię…)

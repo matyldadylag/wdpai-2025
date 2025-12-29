@@ -4,6 +4,33 @@ require_once 'Repository.php';
 
 class UserRepository extends Repository
 {
+    private static ?UserRepository $instance = null;
+
+    // Prevent direct creation
+    protected function __construct()
+    {
+        parent::__construct();
+    }
+
+    // Prevent cloning
+    private function __clone() {}
+
+    // Prevent unserialization
+    public function __wakeup()
+    {
+        throw new Exception("Cannot unserialize singleton");
+    }
+
+    // Global access point
+    public static function getInstance(): UserRepository
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
     // Insert a new user into the database
     public function createUser(string $name, string $email, string $hashedPassword): void
     {
@@ -21,8 +48,8 @@ class UserRepository extends Repository
         ]);
     }
 
-    // Retrieve a user by their email address.
-    public function getUserByEmail(string $email)
+    // Retrieve a user by their email address
+    public function getUserByEmail(string $email): ?array
     {
         // Prepare SQL statement to select user by email
         $stmt = $this->database->connect()->prepare('
@@ -37,7 +64,7 @@ class UserRepository extends Repository
         // Fetch the user as an associative array
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $user;
+        return $user ?: null;
     }
 
     // Get all users for admin panel
